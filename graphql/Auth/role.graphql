@@ -1,0 +1,16 @@
+type Role {
+    id: ID!
+    name: String!
+    remark: String
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+input RoleInput {
+    name: String!
+    remark: String
+}
+
+extend type Mutation {
+    insert_role_one(input: RoleInput! @spread): Role! @create
+}
