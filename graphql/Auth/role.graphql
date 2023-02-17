@@ -1,5 +1,4 @@
 type Role {
-    id: ID!
     name: String!
     remark: String
     created_at: DateTime
@@ -13,4 +12,6 @@ input RoleInput {
 
 extend type Mutation {
     insert_role_one(input: RoleInput! @spread): Role! @create
+    update_role_one(input: RoleInput! @spread): Role! @update
 }
+

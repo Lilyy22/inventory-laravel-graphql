@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\SignUp;
+use Illuminate\Auth\Events\SendMail;
 use Illuminate\Auth\Listeners\SendEmailVerification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -15,7 +15,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        SignUp::class => [
+        SendMail::class => [
             SendEmailVerification::class,
         ],
     ];

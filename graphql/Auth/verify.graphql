@@ -3,6 +3,10 @@ type Verify{
 }
 
 extend type Mutation{
-    verify_user(token: String!): Message!
-     @field(resolver: "App\\GraphQL\\Mutations\\Verify_user")
+     verify_user(token: String!): Message!
+          @field(resolver: "App\\GraphQL\\Mutations\\Verify_user")
+
+     resend_verification_email(email: String!): Message!
+          @field(resolver: "App\\GraphQL\\Mutations\\Resend_verification_email")
+     
 }

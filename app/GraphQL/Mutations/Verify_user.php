@@ -1,7 +1,6 @@
 <?php
 
 namespace App\GraphQL\Mutations;
-use App\Models\User;
 use App\Models\EmailVerification;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;

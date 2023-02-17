@@ -4,9 +4,11 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Events\SignUp;
+use App\Events\SendMail;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerficationMailable;
+use Exception;
+use Symfony\Component\Mailer\Exception\ExceptionInterface;
 
 class SendEmailVerification
 {
@@ -26,8 +28,16 @@ class SendEmailVerification
      * @param  object  $event
      * @return void
      */
-    public function handle(SignUp $event)
+    public function handle(SendMail $event)
     {
-        Mail::to($event->user->email)->send(new VerficationMailable($event->user, $event->token));
+        try
+        {
+            Mail::to($event->user->email)->send(new VerficationMailable($event->user, $event->token));
+
+        }
+        catch(Exception $e)
+        {
+            return 'something went wrong';
+        }
     }
 }

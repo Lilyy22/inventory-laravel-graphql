@@ -19,8 +19,12 @@ input UserInput {
 extend type Mutation {
     sign_up(input: UserInput! @spread): Message!
         @field(resolver: "App\\GraphQL\\Mutations\\Sign_up")
+    
+    sign_in(name: String!, password: String!): Message!
+        @field(resolver: "App\\GraphQL\\Mutations\\Sign_in")
 }
 
 extend type Query {
-    get_users: User @all
+    users: [User!]! @all
+    # users_by_email(email: String! @whereKey): User @all
 }
