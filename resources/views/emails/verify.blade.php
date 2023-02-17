@@ -238,7 +238,9 @@
                                         style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                         <!--[if (!mso)&(!IE)]><!-->
                                         <div
-                                            style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                            style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px 
+                                            solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; 
+                                            -moz-border-radius: 0px;">
                                             <!--<![endif]-->
 
                                             <table style="font-family:arial,helvetica,sans-serif;" role="presentation"
@@ -338,17 +340,13 @@
                                                             <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
                                                             <div align="center">
                                                                 <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://unlayer.com" style="height:57px; v-text-anchor:middle; width:260px;" arcsize="77%"  stroke="f" fillcolor="#33428d"><w:anchorlock/><center style="color:#FFFFFF;font-family:arial,helvetica,sans-serif;"><![endif]-->
-                                                                <a href="{{ $token }}" target="_blank"
-                                                                    class="v-button"
-                                                                    style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #33428d; border-radius: 44px;-webkit-border-radius: 44px; -moz-border-radius: 44px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-                                                                    <span
+                                                                <span
                                                                         style="display:block;padding:20px 70px;line-height:120%;">
                                                                         <strong>
                                                                             <span
                                                                                 style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 16.8px;">
-                                                                                V E R I F Y&nbsp; &nbsp;N O
-                                                                                W</span></strong></span>
-                                                                </a>
+                                                                             {{ $token }}   
+                                                                            </span></strong></span>
                                                                 <!--[if mso]></center></v:roundrect><![endif]-->
                                                             </div>
 

@@ -1,0 +1,8 @@
+type Verify{
+     token: string!
+}
+
+extend type Mutation{
+    verify_user(token: String!): Message!
+     @field(resolver: "App\\GraphQL\\Mutations\\Verify_user")
+}

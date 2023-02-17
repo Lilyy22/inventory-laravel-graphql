@@ -11,4 +11,8 @@ type Query {
 
 type Mutation
 
+
+type Message{
+    message: String! 
+}
 #import Auth/*.graphql

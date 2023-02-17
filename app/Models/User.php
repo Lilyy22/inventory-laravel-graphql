@@ -9,7 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Role;
+use App\Models\EmailVerification;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -38,5 +40,10 @@ class User extends Authenticatable
     public function role() : BelongsTo 
     {
         return $this->belongsTo(Role::class, 'role', 'name');
+    }
+
+    public function email_verification(): HasOne
+    {
+        return $this->hasOne(EmailVerification::class, 'email', 'email');
     }
 }

@@ -2,6 +2,7 @@ type User {
     id: ID!
     name: String!
     email: String!
+    role: String!
     role: Role! @belongsTo
     password: String!
     email_verified_at: DateTime
@@ -16,6 +17,10 @@ input UserInput {
 }
 
 extend type Mutation {
-    sign_up(input: UserInput! @spread): User
+    sign_up(input: UserInput! @spread): Message!
         @field(resolver: "App\\GraphQL\\Mutations\\Sign_up")
+}
+
+extend type Query {
+    get_users: User @all
 }

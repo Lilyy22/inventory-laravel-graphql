@@ -16,7 +16,16 @@ return new class extends Migration
         Schema::create('email_verifications', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
+            $table->timestamp('expiry_date');
+            $table->boolean('is_verified');
             $table->timestamps();
+
+            $table->foreign('email')
+                ->references('email')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
         });
     }
 
