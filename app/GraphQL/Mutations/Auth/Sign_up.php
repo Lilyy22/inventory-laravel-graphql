@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Mutations;
+namespace App\GraphQL\Mutations\Auth;
 use App\Models\User as users;
 use Illuminate\Support\Facades\Hash;
 use App\Events\SendMail;

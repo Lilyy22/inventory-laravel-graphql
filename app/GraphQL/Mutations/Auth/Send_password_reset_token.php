@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Mutations;
+namespace App\GraphQL\Mutations\Auth;
 
 use App\Events\SendMail;
 use App\Models\PasswordReset;

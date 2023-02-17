@@ -18,10 +18,10 @@ input UserInput {
 
 extend type Mutation {
     sign_up(input: UserInput! @spread): Message!
-        @field(resolver: "App\\GraphQL\\Mutations\\Sign_up")
+        @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_up")
     
-    sign_in(name: String!, password: String!): Message!
-        @field(resolver: "App\\GraphQL\\Mutations\\Sign_in")
+    sign_in(email: String!, password: String!): Message!
+        @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_in")
 }
 
 extend type Query {

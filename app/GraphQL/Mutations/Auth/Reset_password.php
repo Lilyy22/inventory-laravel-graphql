@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Mutations;
+namespace App\GraphQL\Mutations\Auth;
 
 use App\Models\PasswordReset;
 use Carbon\Carbon;
@@ -18,7 +18,7 @@ final class Reset_password
         try
         {
             $check = PasswordReset::where('token', $args['token'])
-            ->firstOrFail();
+                    ->firstOrFail();
 
             if(Carbon::now()->greaterThan($check->expiry_date))
             {

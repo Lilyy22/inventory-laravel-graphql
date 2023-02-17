@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Mutations;
+namespace App\GraphQL\Mutations\Auth;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Events\SendMail;

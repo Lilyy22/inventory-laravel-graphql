@@ -46,4 +46,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(EmailVerification::class, 'email', 'email');
     }
+
+    public function is_active()
+    {
+        return $this->email_verified_at != null ? true : false; 
+    }
+
+    public function get_role()
+    {
+        return $this->role; 
+    }
 }
