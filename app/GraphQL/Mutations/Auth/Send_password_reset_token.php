@@ -3,14 +3,14 @@
 namespace App\GraphQL\Mutations\Auth;
 
 use App\Events\SendMail;
-use App\Models\PasswordReset;
 use App\Models\User;
-use App\Traits\GenerateToken;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Repositories\Auth\PasswordResetRepository;
+use App\Repositories\Auth\UserRepository;
+use App\Services\Token;
 
 final class Send_password_reset_token
 {
-    use GenerateToken;
     /**
      * @param  null  $_
      * @param  array{}  $args
@@ -20,11 +20,10 @@ final class Send_password_reset_token
           // TODO implement the resolver
           try
           {
-              $user = User::where('email', $args['email'])
-                      ->firstOrFail();
+              $user = (new UserRepository)->getUserByEmail($args['email']);
   
-              $token = $this->get_token();
-              $this->store_password_reset_token($user, $token);
+              $token = Token::getToken();
+              (new PasswordResetRepository)->create($user->email, $token);
               SendMail::dispatch($user, $token);
       
               return ['message'=> 'We have sent email with verification code.'];

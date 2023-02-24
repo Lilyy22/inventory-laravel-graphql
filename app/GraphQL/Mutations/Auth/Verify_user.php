@@ -1,9 +1,10 @@
 <?php
 
 namespace App\GraphQL\Mutations\Auth;
-use App\Models\EmailVerification;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
+use App\Repositories\Auth\EmailVerificationRepository;
 
 final class Verify_user
 {
@@ -15,10 +16,9 @@ final class Verify_user
     {
         try
         {
-            $email_verification = EmailVerification::where('token', $args['token'])
-                    ->firstOrFail();
-
-            if(Carbon::now()->greaterThan($email_verification->expiry_date))
+            $email_verification = (new EmailVerificationRepository)->getEmail($args['token']);
+                    
+            if($email_verification->is_expired())
             {
                 return ["message" => "token has expired."];
             }
@@ -26,7 +26,7 @@ final class Verify_user
             {
                 //update user email_verified_at to current date
                 $email_verification->user()->update(['email_verified_at' => Carbon::now()]);
-                $email_verification->update(['is_verified' => true]);
+                (new EmailVerificationRepository)->verify($args['token']);
 
                 return ["message" => "User account is verified."];
             }

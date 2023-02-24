@@ -2,8 +2,7 @@
 
 namespace App\GraphQL\Mutations\Auth;
 
-use App\Models\PasswordReset;
-use Carbon\Carbon;
+use App\Repositories\Auth\PasswordResetRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class Reset_password
@@ -17,16 +16,15 @@ final class Reset_password
         // TODO implement the resolver
         try
         {
-            $check = PasswordReset::where('token', $args['token'])
-                    ->firstOrFail();
+            $resetToken = (new PasswordResetRepository)->getEmail($args['token']);
 
-            if(Carbon::now()->greaterThan($check->expiry_date))
+            if($resetToken->is_expired())
             {
                 return ["message" => "token has expired."];
             }
             else
             {
-                
+                return ["message" => $resetToken->email];
             }
 
         }catch(ModelNotFoundException $e)

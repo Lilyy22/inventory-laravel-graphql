@@ -33,6 +33,7 @@ class SendEmailVerification
         try
         {
             Mail::to($event->user->email)->send(new VerficationMailable($event->user, $event->token));
+            
 
         }
         catch(Exception $e)

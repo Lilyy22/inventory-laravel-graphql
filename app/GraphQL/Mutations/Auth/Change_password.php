@@ -2,7 +2,9 @@
 
 namespace App\GraphQL\Mutations\Auth;
 use App\Models\User;
+use App\Repositories\Auth\UserRepository;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 final class Change_password
 {
@@ -15,16 +17,14 @@ final class Change_password
         // TODO implement the resolver
         if($args['newPassword'] == $args['confirmPassword'])
         {
-            // $user = User::();
-            // $user->update([
-            //     'password' => Hash::make($args['confirmPassword']),
-            // ]);
+            //$user = Auth::user();
+           (new UserRepository)->updatePassword('gelilahhamid2@gmail.com', $args['newPassword']);
 
-            return ["message" => "passwords is changed."];
+            return ["message" => "password Updated."];
 
         }else
         {
-            return ["message" => "passwords donot match."];
+            return ["message" => "password do not match."];
         }
     }
 }

@@ -12,12 +12,14 @@ use App\Models\Role;
 use App\Models\EmailVerification;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasUuids;
-    
+    //use SoftDeletes;
+
     public $incrementing = false;
     protected $keytype = 'uuid';
 
@@ -35,6 +37,10 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    protected $attributes = [
+        'role' => 'user',
     ];
 
     public function role() : BelongsTo 
@@ -56,4 +62,5 @@ class User extends Authenticatable
     {
         return $this->role; 
     }
+    
 }

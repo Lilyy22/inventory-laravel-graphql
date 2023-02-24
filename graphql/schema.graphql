@@ -10,3 +10,5 @@ type Mutation
 
 
 #import Auth/*.graphql
+#import Hrm/*.graphql
+#import Im/*.graphql

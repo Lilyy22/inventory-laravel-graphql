@@ -4,7 +4,6 @@ namespace App\GraphQL\Mutations\Auth;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\User;
-use App\Traits\GenerateToken;
 
 final class Sign_in
 {
@@ -31,5 +30,6 @@ final class Sign_in
         {
             return ["message" => "credentials do not match."];
         }
+
     }
 }

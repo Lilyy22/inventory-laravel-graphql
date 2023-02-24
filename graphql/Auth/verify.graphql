@@ -1,5 +1,5 @@
 type Verify{
-     token: string!
+     token: String!
 }
 
 extend type Mutation{

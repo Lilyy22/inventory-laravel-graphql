@@ -4,12 +4,11 @@ namespace App\GraphQL\Mutations\Auth;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Events\SendMail;
-use App\Models\EmailVerification;
-use App\Traits\GenerateToken;
-
+use App\Repositories\Auth\EmailVerificationRepository;
+use App\Services\Token;
+ 
 final class Resend_verification_email
 {
-    use GenerateToken;
     /**
      * @param  null  $_
      * @param  array{}  $args
@@ -19,11 +18,12 @@ final class Resend_verification_email
         // TODO implement the resolver
         try
         {
-            $email = EmailVerification::where('email', $args['email'])
-                    ->firstOrFail();
+            //throw Modelnotfound exception
+            $email = (new EmailVerificationRepository)->getUnverifiedToken($args['email']);
 
-            $token = $this->get_token();
-            $this->store_token($email->user, $token);
+            $token = Token::getToken();
+            (new EmailVerificationRepository)->updateToken($email->user, $token);
+            //send email
             SendMail::dispatch($email->user, $token);
     
             return ['message'=> 'We have sent email with verification code.'];
@@ -31,7 +31,7 @@ final class Resend_verification_email
         }
         catch(ModelNotFoundException $e)
         {
-            return ["message" => "Email address is not recognized."];
+            return ["message" => "Can not send verification email."];
         }
     }
 }

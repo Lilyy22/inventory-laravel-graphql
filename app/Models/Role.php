@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
     use HasFactory;
-    use HasUuids;
+    use HasUuids, SoftDeletes;
     
     public $incrementing = false;
     protected $keytype = 'uuid';
