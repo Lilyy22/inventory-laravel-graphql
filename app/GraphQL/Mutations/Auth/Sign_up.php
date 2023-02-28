@@ -4,7 +4,7 @@ namespace App\GraphQL\Mutations\Auth;
 
 use App\Events\SendMail;
 use App\Repositories\Auth\UserRepository;
-use App\Services\Token;
+use App\Services\Auth\Token;
 use App\Repositories\Auth\EmailVerificationRepository;
 
 final class Sign_up

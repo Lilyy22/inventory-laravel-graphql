@@ -13,7 +13,7 @@ class UserRepository
         return User::all();
     }
 
-    public static function create(array $user)
+    public static function create($user)
     {
         return User::create(
                 [
@@ -28,17 +28,17 @@ class UserRepository
         return User::destroy($id);
     }
 
-    public static function update($id, array $user)
+    public static function update($id, $user)
     {
         return User::whereId($id)->update($user);
     }
 
     public static function get($id)
     {
-        return User::find($id);
+        return User::findOrFail($id);
     }
 
-    public function getUserByEmail($email)
+    public static function getUserByEmail($email)
     {
         return User::where('email', $email)->firstOrFail();
     }

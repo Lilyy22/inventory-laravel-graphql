@@ -15,14 +15,14 @@ class EmailVerificationRepository
     //     $this->emailVerification = $emailVerification;
     // }
 
-    public function create(array $user, $token)
+    public function create($user, $token)
     {
         return EmailVerification::Create([
-            'email' => $user['email'],
-            'token' => $token,
-            'expiry_date' => CarbonImmutable::now()->add(1, 'day'),
-            'is_verified' => false,
-        ]);
+                'email' => $user['email'],
+                'token' => $token,
+                'expiry_date' => CarbonImmutable::now()->add(1, 'day'),
+                'is_verified' => false,
+             ]);
     }
 
     public function updateToken($user, $token)

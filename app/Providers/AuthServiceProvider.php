@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Role;
+use App\Policies\RolePolicy;
+use App\Services\Auth\Jwt;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +29,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+            // Auth::viaRequest('jwt', function (Request $request) {
+            //     if(empty($request->bearerToken()))
+            //     {
+            //         return  null;
+            //     }else{
+            //         return (new Jwt)->getUser($request->bearerToken());
+            //     }
+            // });
+        
     }
 }

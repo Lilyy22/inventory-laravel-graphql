@@ -26,7 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'role',
+        'role_id',
         'password',
     ];
 
@@ -39,13 +39,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $attributes = [
-        'role' => 'user',
-    ];
+    // protected $attributes = [
+    //     'role' => 'user',
+    // ];
 
     public function role() : BelongsTo 
     {
-        return $this->belongsTo(Role::class, 'role', 'name');
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     public function email_verification(): HasOne

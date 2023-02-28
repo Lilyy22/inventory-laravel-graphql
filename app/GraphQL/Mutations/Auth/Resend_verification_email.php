@@ -5,7 +5,7 @@ namespace App\GraphQL\Mutations\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Events\SendMail;
 use App\Repositories\Auth\EmailVerificationRepository;
-use App\Services\Token;
+use App\Services\Auth\Token;
  
 final class Resend_verification_email
 {

@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Repositories\Auth\PasswordResetRepository;
 use App\Repositories\Auth\UserRepository;
-use App\Services\Token;
+use App\Services\Auth\Token;
 
 final class Send_password_reset_token
 {

@@ -6,17 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+//use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\RolePermission;
+
 
 class Role extends Model
 {
     use HasFactory;
-    use HasUuids, SoftDeletes;
+    use HasUuids;
     
     public $incrementing = false;
     protected $keytype = 'uuid';
-    protected $primaryKey = 'name';
+    protected $primaryKey = 'id';
     
     protected $fillable = [
         'name',
@@ -25,6 +27,11 @@ class Role extends Model
 
     public function users() : HasMany
     {
-        return $this->hasMany(User::class, 'role', 'name');
+        return $this->hasMany(User::class, 'role');
+    }
+
+    public function permissions() : HasMany
+    {
+        return $this->hasMany(RolePermission::class, 'role_id');
     }
 }

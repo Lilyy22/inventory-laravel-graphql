@@ -1,0 +1,11 @@
+type Permission
+{
+    name: String!
+}
+
+extend type Mutation
+{
+    insert_permission_one(name: String!): Permission! @create
+    update_permission_one(id:uuid!, name: String!): Permission! @update
+
+}

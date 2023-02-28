@@ -1,17 +1,17 @@
 type Role {
     name: String!
-    remark: String
+    remarks: String
     created_at: DateTime
     updated_at: DateTime
 }
 
 input RoleInput {
     name: String! @rules(apply: ["unique:roles,name"])
-    remark: String
+    remarks: String
 }
 
-extend type Mutation {
-    insert_role_one(input: RoleInput! @spread): Role! @create
+extend type Mutation @guard{
+    insert_role_one(input: RoleInput! @spread): Role! @create @can(ability: "create")
     update_role_one(input: RoleInput! @spread): Role! @update
 }
 
