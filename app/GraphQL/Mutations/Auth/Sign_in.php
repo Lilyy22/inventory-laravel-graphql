@@ -4,7 +4,7 @@ namespace App\GraphQL\Mutations\Auth;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Repositories\Auth\UserRepository;
-use App\Services\Auth\Jwt;
+use App\Services\Auth\JwtToken;
 use Illuminate\Http\Request;
 
 final class Sign_in
@@ -22,18 +22,21 @@ final class Sign_in
 
             if (password_verify($args['password'], $user->password))
             {
-                $access_token = Jwt::encode(array('user_id'=> $user->id, "exp"=>"3s"), env('JWT_SECRET'));
-                $refresh_token = Jwt::decode($access_token, env('JWT_SECRET'));
+                $access_token = JwtToken::accessToken($user);
+                $refresh_token = JwtToken::refreshToken($user);
                 
+                if(($access_token | $refresh_token) == null){
+                    return  ["message"=> "something went wrong"];
+                }
+                JwtToken::storeRefreshToken($refresh_token, JwtToken::$refresh_exp, $user->id);
+
                 return $user->is_active() ? 
 
-                    ["access_token" => $access_token, "refresh_token"=> $refresh_token]: 
-                    ["message"=> "email not verified", "access_token" => null];
+                    ["access_token" => $access_token, "refresh_token"=> $refresh_token, "message"=> "Logged In."]: 
+                    ["message"=> "email not verified"];
 
-            }else
-            {
-                return ["message" => "credentials do not match."];
-            }  
+            }
+                return ["message" => "credentials do not match."]; 
 
         }catch(ModelNotFoundException $e)
         {

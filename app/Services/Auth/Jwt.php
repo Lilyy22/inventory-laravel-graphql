@@ -2,14 +2,10 @@
 
 namespace App\Services\Auth;
 
-use App\Repositories\Auth\UserRepository;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 class Jwt
 {
 
-    protected static $jwt_header = array("typ"=>"JWT", "alg"=>"HS256");
-    
+    protected static $jwt_header = array("typ"=>"JWT", "alg"=>"HS256");  
     /*
      *
      * array<string, string> $head An array with header elements to attach
@@ -53,6 +49,7 @@ class Jwt
             $sign = static::urlsafeB64Decode($signb64);
             $payload = static::urlsafeB64Decode($payloadb64);
             $header = static::urlsafeB64Decode($headerb64);
+
             if (null === ($sign || $payload || $header)) {
                 return 'here';
             }
@@ -60,7 +57,7 @@ class Jwt
             $header = (array) json_decode($header);
             $payload = (array) json_decode($payload);
 
-            return static::verify($header, $payload, $sign, $headerb64, $payloadb64, $secret);
+        return static::verify($header, $payload, $sign, $headerb64, $payloadb64, $secret);
     }
     /*
      * get 
@@ -81,53 +78,37 @@ class Jwt
             return null;
         }
 
-        return $payload;
-    } 
-    /*
-     * get user object
-     *
-     * @return payload if verification is successful
-     *
-     */
-    public function getUser($jwt, $secret)
-    {
-       $payload = empty(static::decode($jwt, $secret)) ? false : true;
-
-       if($payload)
-       {
-            try{
-
-                $user = UserRepository::get($payload['user_id']);
-                return $user;
-
-            }catch(ModelNotFoundException $e)
+        if(array_key_exists('iat', $payload)  && array_key_exists('exp', $payload))
+        {
+            if($payload['exp'] < time())
             {
                 return null;
             }
+
+        }else{
+            return null;
         }
 
-        return null;
-       
-    }
+        return $payload;
+    } 
     /*
-     * encode base64url
-     *
+     * 
      * @return base64url
      *
      */
-     
     public static function urlsafeB64Encode(string $input)
     {
         return \str_replace('=', '', \strtr(\base64_encode($input), '+/', '-_'));
     }
      /*
-     * decode base64url
-     *
+     * 
      * @return base64url
      *
      */
      public static function urlsafeB64Decode($data)
      {
-          return base64_decode(strtr($data, '-_', '+/'));
+        return base64_decode(strtr($data, '-_', '+/'));
      }
+    
+     
 }

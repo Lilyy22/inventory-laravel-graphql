@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Role;
 use App\Policies\RolePolicy;
-use App\Services\Auth\Jwt;
+use App\Services\Auth\JwtToken;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,14 +29,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-            // Auth::viaRequest('jwt', function (Request $request) {
-            //     if(empty($request->bearerToken()))
-            //     {
-            //         return  null;
-            //     }else{
-            //         return (new Jwt)->getUser($request->bearerToken());
-            //     }
-            // });
+            Auth::viaRequest('jwt', function (Request $request) {
+                if(empty($request->bearerToken()))
+                {
+                    return  null;
+                }
+                    return JwtToken::getUser($request->bearerToken(), env('JWT_ACCESS_KEY'));
+                
+            });
         
     }
 }

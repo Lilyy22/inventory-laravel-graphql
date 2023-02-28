@@ -10,7 +10,7 @@ type User {
     updated_at: DateTime
 }
 
-type Token{
+type Tokens{
     message: String
     access_token: String
     refresh_token: String
@@ -27,7 +27,7 @@ extend type Mutation {
     sign_up(input: UserInput! @spread): Message!
         @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_up")
     
-    sign_in(email: String!, password: String!): Token
+    sign_in(email: String!, password: String!): Tokens
         @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_in")
 }
 

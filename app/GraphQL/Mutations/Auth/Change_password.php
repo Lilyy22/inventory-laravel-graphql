@@ -17,8 +17,8 @@ final class Change_password
         // TODO implement the resolver
         if($args['newPassword'] == $args['confirmPassword'])
         {
-            //$user = Auth::user();
-           (new UserRepository)->updatePassword('gelilahhamid2@gmail.com', $args['newPassword']);
+            $user = Auth::user();
+           (new UserRepository)->updatePassword($user->email, $args['newPassword']);
 
             return ["message" => "password Updated."];
 

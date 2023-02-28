@@ -1,0 +1,5 @@
+extend type Mutation 
+{
+    get_access_token(refresh_token: String!): String!
+     @field(resolver: "App\\GraphQL\\Mutations\\Auth\\get_refresh_token")
+}

@@ -43,7 +43,7 @@ class User extends Authenticatable
     //     'role' => 'user',
     // ];
 
-    public function role() : BelongsTo 
+    public function role(): BelongsTo 
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
@@ -58,9 +58,5 @@ class User extends Authenticatable
         return $this->email_verified_at != null ? true : false; 
     }
 
-    public function get_role()
-    {
-        return $this->role; 
-    }
     
 }
