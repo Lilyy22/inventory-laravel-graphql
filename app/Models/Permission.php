@@ -18,6 +18,6 @@ class Permission extends Model
 
     public function roles() : HasMany
     {
-        return $this->hasMany(RolePermission::class, 'permission_id');
+        return $this->hasMany(RolePermission::class);
     }
 }

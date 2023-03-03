@@ -25,9 +25,9 @@ class EmailVerificationRepository
              ]);
     }
 
-    public function updateToken($user, $token)
+    public function updateToken($email, $token)
     {
-        return EmailVerification::where('email', $user['email'])
+        return EmailVerification::where('email', $email)
                 ->update([
                     'token' => $token,
                     'expiry_date' => CarbonImmutable::now()->add(1, 'day'),

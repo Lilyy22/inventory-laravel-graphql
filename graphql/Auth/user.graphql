@@ -6,8 +6,6 @@ type User {
     role_r: Role! @belongsTo
     password: String!
     email_verified_at: DateTime
-    created_at: DateTime
-    updated_at: DateTime
 }
 
 type Tokens{
@@ -16,18 +14,24 @@ type Tokens{
     refresh_token: String
 }
 
-input UserInput {
-    name: String! @rules(apply: ["unique:users,name"])
-    email: String! @rules(apply: ["unique:users,email", "email"])
-    password: String! @rules(apply: ["min:8", "max:32", "regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!$-_@%]).*$/"]) 
+input SignUpInput {
+    name: String! @rules(apply: ["required","unique:users,name","min:4", "max:22"])
+    email: String! @rules(apply: ["required","unique:users,email", "email"])
+    password: String! @rules(apply: ["required","min:8", "max:32", "regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!$-_@%]).*$/"]) 
+                 #attribute: "password must contain at least one uppercase one lowercase one number and one special character(!$-_@%)")
+}
+
+input SignInInput {
+    email: String! @rules(apply: ["required", "email"])
+    password: String! @rules(apply: ["required","min:8", "max:32", "regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!$-_@%]).*$/"]) 
                  #attribute: "password must contain at least one uppercase one lowercase one number and one special character(!$-_@%)")
 }
 
 extend type Mutation {
-    sign_up(input: UserInput! @spread): Message!
+    sign_up(input: SignUpInput! @spread): Message!
         @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_up")
     
-    sign_in(email: String!, password: String!): Tokens
+    sign_in(input: SignInInput! @spread): Tokens
         @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_in")
 }
 

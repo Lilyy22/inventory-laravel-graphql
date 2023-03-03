@@ -15,7 +15,7 @@ final class Change_password
     public function __invoke($_, array $args)
     {
         // TODO implement the resolver
-        if($args['newPassword'] == $args['confirmPassword'])
+        if($args['newPassword'] == $args['confirmNewPassword'])
         {
             $user = Auth::user();
            (new UserRepository)->updatePassword($user->email, $args['newPassword']);

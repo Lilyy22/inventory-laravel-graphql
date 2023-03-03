@@ -16,6 +16,7 @@ final class get_refresh_token
     {
         // TODO implement the resolver
         $payload = JwtToken::verifyRefreshToken($args['refresh_token']);
+        
         if($payload)
         {
             return JwtToken::accessToken(UserRepository::get($payload['user_id']));

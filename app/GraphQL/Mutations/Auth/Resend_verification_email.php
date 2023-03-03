@@ -19,12 +19,12 @@ final class Resend_verification_email
         try
         {
             //throw Modelnotfound exception
-            $email = (new EmailVerificationRepository)->getUnverifiedToken($args['email']);
+            $emailVerification = (new EmailVerificationRepository)->getUnverifiedToken($args['email']);
 
             $token = Token::getToken();
-            (new EmailVerificationRepository)->updateToken($email->user, $token);
+            (new EmailVerificationRepository)->updateToken($emailVerification->email, $token);
             //send email
-            SendMail::dispatch($email->user, $token);
+            SendMail::dispatch($emailVerification->user(), $token);
     
             return ['message'=> 'We have sent email with verification code.'];
             

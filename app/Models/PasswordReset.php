@@ -14,7 +14,8 @@ class PasswordReset extends Model
     protected $fillable = [
         'email',
         'token',
-        'expiry_date'
+        'expiry_date',
+        'is_verified'
      ];
 
     public $incrementing = false;

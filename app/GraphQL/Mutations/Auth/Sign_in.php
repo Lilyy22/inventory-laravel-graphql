@@ -22,21 +22,23 @@ final class Sign_in
 
             if (password_verify($args['password'], $user->password))
             {
-                $access_token = JwtToken::accessToken($user);
-                $refresh_token = JwtToken::refreshToken($user);
+                if($user->is_active())
+                {
+                    $access_token = JwtToken::accessToken($user);
+                    $refresh_token = JwtToken::refreshToken($user);
                 
-                if(($access_token | $refresh_token) == null){
-                    return  ["message"=> "something went wrong"];
+                    JwtToken::storeRefreshToken($refresh_token, JwtToken::$refresh_exp, $user->id);
+
+                    return ["access_token" => $access_token, 
+                            "refresh_token"=> $refresh_token, 
+                            "message"=> "access token expires in 15 min"];
                 }
-                JwtToken::storeRefreshToken($refresh_token, JwtToken::$refresh_exp, $user->id);
-
-                return $user->is_active() ? 
-
-                    ["access_token" => $access_token, "refresh_token"=> $refresh_token, "message"=> "Logged In."]: 
-                    ["message"=> "email not verified"];
+                
+                return ["message"=> "email not verified"];
 
             }
-                return ["message" => "credentials do not match."]; 
+            
+            return ["message" => "credentials do not match."]; 
 
         }catch(ModelNotFoundException $e)
         {
@@ -45,9 +47,4 @@ final class Sign_in
 
     }
 
-    public function gettoken()
-    {
-        $request = new Request();
-       return $request->bearerToken();
-    }
 }

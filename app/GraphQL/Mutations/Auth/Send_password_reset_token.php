@@ -31,7 +31,7 @@ final class Send_password_reset_token
           }
           catch(ModelNotFoundException $e)
           {
-              return ["message" => "Sign UP first."];
+              return ["message" => "Credentials does not match our records"];
           }
     }
 }

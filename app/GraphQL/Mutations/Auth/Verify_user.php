@@ -24,11 +24,12 @@ final class Verify_user
             }
             else
             {
-                //update user email_verified_at to current date
+                
                 $email_verification->user()->update(['email_verified_at' => Carbon::now()]);
+                //update user email_verified_at to current date
                 (new EmailVerificationRepository)->verify($args['token']);
 
-                return ["message" => "User account is verified."];
+                return ["message" => "Account verified!"];
             }
         }
         catch(ModelNotFoundException $e)

@@ -42,7 +42,7 @@ class Jwt
 
         if (count($jwt_json) !== 3) {
            // Wrong number of segments
-           return 'wrong num';
+           return null;
         }
         list($headerb64, $payloadb64, $signb64) =  $jwt_json;
 
@@ -51,7 +51,7 @@ class Jwt
             $header = static::urlsafeB64Decode($headerb64);
 
             if (null === ($sign || $payload || $header)) {
-                return 'here';
+                return null;
             }
            
             $header = (array) json_decode($header);
@@ -84,12 +84,11 @@ class Jwt
             {
                 return null;
             }
+            return $payload;
 
-        }else{
-            return null;
         }
+        return null;
 
-        return $payload;
     } 
     /*
      * 

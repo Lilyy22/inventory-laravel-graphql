@@ -2,8 +2,12 @@ type Verify{
      token: String!
 }
 
+input VerifyInput{
+     token: String! @rules(apply: ["required"])
+}
+
 extend type Mutation{
-     verify_user(token: String!): Message!
+     verify_user(input: VerifyInput! @spread): Message!
           @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Verify_user")
 
      resend_verification_email(email: String!): Message!

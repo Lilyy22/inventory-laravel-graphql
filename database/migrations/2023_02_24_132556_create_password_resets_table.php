@@ -18,6 +18,13 @@ return new class extends Migration
             $table->string('token');
             $table->timestamp('expiry_date');
             $table->timestamps();
+
+            $table->foreign('email')
+                ->references('email')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
         });
     }
 

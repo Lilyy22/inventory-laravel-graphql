@@ -11,12 +11,11 @@ class PasswordResetRepository
 
     public function create($email, $token)
     {
-        return PasswordReset::Create([
-                'email' => $email, 
-                'token' => $token,
-                'expiry_date' => CarbonImmutable::now()->addHour(1),
-                'is_verified' => false,
-            ]);
+        return PasswordReset::updateOrCreate(
+                    ['email' => $email],
+                    ['token' => $token,
+                     'expiry_date' => CarbonImmutable::now()->addHour(1),
+                    ]);
     }
 
     public function verify($token)

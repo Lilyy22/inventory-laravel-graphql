@@ -19,8 +19,10 @@ class JwtToken
      */
     public static function getUser($jwt, $secret)
     {
-       if($payload = Jwt::decode($jwt, $secret))
-       {
+        $payload = Jwt::decode($jwt, $secret);
+
+        if($payload !== null)
+        {
             try{
 
                 $user = UserRepository::get($payload['user_id']);
@@ -30,7 +32,7 @@ class JwtToken
             {
                 return null;
             }
-       }
+        }
        
         return null;
     }
@@ -43,7 +45,7 @@ class JwtToken
     {
        if($user)
        {
-        $payload = array("user_id"=> $user->id, 
+         $payload = array("user_id"=> $user->id, 
                         "role"=> "user", 
                         "iat" => time(),
                         "exp" => time() + static::$access_exp //expires after 15 min
@@ -73,25 +75,34 @@ class JwtToken
        
         return null;
     }
-
+    /*
+     * get refresh token
+     *
+     * return stored token
+     */
     public static function storeRefreshToken($refreshToken, $exp, $user_id)
     {
-       return RefreshToken::create([
+       return RefreshToken::createOrUpdate(
+                ['user_id' => $user_id],
+                [
                     'token' => $refreshToken,
                     'expires_at' => time() + $exp,
-                    'user_id' => $user_id
+                    
                 ]);
     }
-
+    /*
+     * get refresh token 
+     *
+     * return user if verified
+     */
     public static function verifyRefreshToken($refreshToken)
     {
         try
         {
             $token = RefreshToken::where('token', $refreshToken)->firstOrFail();
-            if($token)
-            {
-                return $token->expires_at < time() ? false : $token->user_id;
-            }
+            
+            return ($token->expires_at < time()) ? false : $token->user_id;
+            
 
         }catch(ModelNotFoundException $e)
         {

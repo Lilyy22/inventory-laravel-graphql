@@ -3,6 +3,7 @@
 namespace App\GraphQL\Mutations\Auth;
 
 use App\Repositories\Auth\PasswordResetRepository;
+use App\Repositories\Auth\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class Reset_password
@@ -24,14 +25,18 @@ final class Reset_password
             }
             else
             {
-                return ["message" => $resetToken->email];
+                if($args['newPassword'] == $args['confirmNewPassword'])
+                {
+                    (new UserRepository)->updatePassword($$resetToken->email, $args['newPassword']);
+
+                    return ["message" => "password Updated."];
+                }
             }
 
         }catch(ModelNotFoundException $e)
         {
-            return ["message" => "Not found."];
+            return ["message" => "Invalid Token!"];
         }
-      
-        
+    
     }
 }

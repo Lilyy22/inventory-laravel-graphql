@@ -6,7 +6,7 @@ type Role {
 }
 
 input RoleInput {
-    name: String! @rules(apply: ["unique:roles,name"])
+    name: String! @rules(apply: ["required","unique:roles,name"])
     remarks: String
 }
 

@@ -25,13 +25,13 @@ class Role extends Model
         'remark'
     ];
 
-    public function users() : HasMany
+    public function userRole() : HasMany
     {
-        return $this->hasMany(User::class, 'role_id');
+        return $this->hasMany(UserRole::class);
     }
 
     public function permissions() : HasMany
     {
-        return $this->hasMany(RolePermission::class, 'role_id');
+        return $this->hasMany(RolePermission::class);
     }
 }

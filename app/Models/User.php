@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Role;
+//use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\UserRole;
 use App\Models\EmailVerification;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
+//use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -26,7 +27,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'role_id',
         'password',
     ];
 
@@ -43,9 +43,9 @@ class User extends Authenticatable
     //     'role' => 'user',
     // ];
 
-    public function role(): BelongsTo 
+    public function userRole(): HasMany 
     {
-        return $this->belongsTo(Role::class, 'role_id');
+        return $this->hasMany(UserRole::class);
     }
 
     public function email_verification(): HasOne
