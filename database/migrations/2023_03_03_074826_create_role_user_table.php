@@ -13,14 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_roles', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('role_user', function (Blueprint $table) {
             $table->uuid('user_id');
             $table->uuid('role_id');
-            $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('role_id')
+                    ->references('id')
+                    ->on('roles')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

@@ -5,7 +5,9 @@ type Message{
     message: String! 
 }
 
-type Query 
+type Query {
+    me: User! @auth
+}
 type Mutation
 
 

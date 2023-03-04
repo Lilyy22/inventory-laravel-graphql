@@ -16,6 +16,7 @@ class SendMail
 
     public $user;
     public $token;
+    public $mailable;
 
     /**
      * Create a new event instance.
@@ -26,7 +27,7 @@ class SendMail
     {
         $this->user = $user;
         $this->token = $token;
-
+        //$this->mailable = $mailable;
     }
 
     /**

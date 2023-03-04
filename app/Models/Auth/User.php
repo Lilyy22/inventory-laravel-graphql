@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,10 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 //use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\UserRole;
+use App\Models\Auth\Role;
 use App\Models\EmailVerification;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 //use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -43,9 +43,9 @@ class User extends Authenticatable
     //     'role' => 'user',
     // ];
 
-    public function userRole(): HasMany 
+    public function roles(): BelongsToMany 
     {
-        return $this->hasMany(UserRole::class);
+        return $this->belongsToMany(Role::class);
     }
 
     public function email_verification(): HasOne

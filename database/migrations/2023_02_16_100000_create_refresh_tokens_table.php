@@ -18,6 +18,12 @@ return new class extends Migration
             $table->bigInteger('expires_at');
             $table->uuid('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

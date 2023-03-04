@@ -24,7 +24,7 @@ final class Resend_verification_email
             $token = Token::getToken();
             (new EmailVerificationRepository)->updateToken($emailVerification->email, $token);
             //send email
-            SendMail::dispatch($emailVerification->user(), $token);
+            SendMail::dispatch($emailVerification->user, $token);
     
             return ['message'=> 'We have sent email with verification code.'];
             

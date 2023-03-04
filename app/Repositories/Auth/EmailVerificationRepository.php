@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Auth;
 
-use App\Models\EmailVerification;
+use App\Models\Auth\EmailVerification;
 use Carbon\CarbonImmutable;
 
 class EmailVerificationRepository 

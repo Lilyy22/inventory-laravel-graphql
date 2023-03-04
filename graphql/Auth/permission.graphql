@@ -1,6 +1,8 @@
-type Permission
-{
+type Permission{
     name: String!
+    created_at: DateTime
+    updated_at: DateTime
+    role: [Role!]! @belongsToMany
 }
 
 extend type Mutation

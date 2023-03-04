@@ -2,7 +2,7 @@
 
 namespace App\Services\Auth;
 
-use App\Models\RefreshToken;
+use App\Models\Auth\RefreshToken;
 use App\Repositories\Auth\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Services\Auth\Jwt;
@@ -12,7 +12,6 @@ class JwtToken
 
     public static $access_exp = 1800; //expires after 15 min
     public static $refresh_exp = 604800; //expires after 7 days
-
      /*
      * get user object
      *
@@ -46,16 +45,15 @@ class JwtToken
        if($user)
        {
          $payload = array("user_id"=> $user->id, 
-                        "role"=> "user", 
-                        "iat" => time(),
-                        "exp" => time() + static::$access_exp //expires after 15 min
+                            "role"=> "user", 
+                            "iat" => time(),
+                            "exp" => time() + static::$access_exp //expires after 15 min
                         );
             return Jwt::encode($payload, env('JWT_ACCESS_KEY'));
        }
        
         return null;
     }
-
     /*
      * get user 
      *
@@ -82,12 +80,11 @@ class JwtToken
      */
     public static function storeRefreshToken($refreshToken, $exp, $user_id)
     {
-       return RefreshToken::createOrUpdate(
+       return RefreshToken::updateOrCreate(
                 ['user_id' => $user_id],
                 [
                     'token' => $refreshToken,
                     'expires_at' => time() + $exp,
-                    
                 ]);
     }
     /*
@@ -101,7 +98,7 @@ class JwtToken
         {
             $token = RefreshToken::where('token', $refreshToken)->firstOrFail();
             
-            return ($token->expires_at < time()) ? false : $token->user_id;
+            return ($token->expires_at < time()) ? false : $token;
             
 
         }catch(ModelNotFoundException $e)

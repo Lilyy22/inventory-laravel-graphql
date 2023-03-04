@@ -8,7 +8,6 @@ use App\Events\SendMail;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerficationMailable;
 use Exception;
-use Symfony\Component\Mailer\Exception\ExceptionInterface;
 
 class SendEmailVerification
 {

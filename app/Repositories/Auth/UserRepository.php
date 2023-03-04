@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Auth;
 
-use App\Models\User;
+use App\Models\Auth\User;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository 
@@ -15,8 +15,7 @@ class UserRepository
 
     public static function create($user)
     {
-        return User::create(
-                [
+        return User::create([
                     'name' => $user['name'],
                     'email' => $user['email'],
                     'password' => Hash::make($user['password']),

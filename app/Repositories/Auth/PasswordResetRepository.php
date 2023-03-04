@@ -2,9 +2,8 @@
 
 namespace App\Repositories\Auth;
 
-use App\Models\EmailVerification;
 use Carbon\CarbonImmutable;
-use App\Models\PasswordReset;
+use App\Models\Auth\PasswordReset;
 
 class PasswordResetRepository 
 {

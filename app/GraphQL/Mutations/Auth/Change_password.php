@@ -14,17 +14,22 @@ final class Change_password
      */
     public function __invoke($_, array $args)
     {
-        // TODO implement the resolver
-        if($args['newPassword'] == $args['confirmNewPassword'])
-        {
-            $user = Auth::user();
-           (new UserRepository)->updatePassword($user->email, $args['newPassword']);
+        $user = Auth::user();//get current user
 
-            return ["message" => "password Updated."];
-
-        }else
+        if (password_verify($args['currentPassword'], $user->password))
         {
-            return ["message" => "password do not match."];
+            if($args['newPassword'] == $args['confirmNewPassword'])
+            {
+               (new UserRepository)->updatePassword($user->email, $args['newPassword']);
+    
+                return ["message" => "password Updated."];
+    
+            }else
+            {
+                return ["message" => "password do not match."];
+            }
         }
+       
+        return ["message" => "Incorrect password!"];
     }
 }

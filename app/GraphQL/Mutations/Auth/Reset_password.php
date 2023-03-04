@@ -25,12 +25,14 @@ final class Reset_password
             }
             else
             {
-                if($args['newPassword'] == $args['confirmNewPassword'])
+                if($args['newPassword'] === $args['confirmNewPassword'])
                 {
-                    (new UserRepository)->updatePassword($$resetToken->email, $args['newPassword']);
+                    (new UserRepository)->updatePassword($resetToken->email, $args['newPassword']);
 
                     return ["message" => "password Updated."];
                 }
+
+                return ["message" => "password do not match."];
             }
 
         }catch(ModelNotFoundException $e)

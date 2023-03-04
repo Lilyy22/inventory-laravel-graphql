@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Auth;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 //use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
-use App\Models\RolePermission;
-
+use App\Models\Auth\User;
+use App\Models\Auth\Permission;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
@@ -18,20 +17,19 @@ class Role extends Model
     
     public $incrementing = false;
     protected $keytype = 'uuid';
-    protected $primaryKey = 'id';
     
     protected $fillable = [
         'name',
         'remark'
     ];
 
-    public function userRole() : HasMany
+    public function users() : BelongsToMany
     {
-        return $this->hasMany(UserRole::class);
+        return $this->belongsToMany(User::class);
     }
 
-    public function permissions() : HasMany
+    public function permissions() : BelongsToMany
     {
-        return $this->hasMany(RolePermission::class);
+        return $this->BelongsToMany(Permission::class);
     }
 }

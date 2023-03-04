@@ -2,10 +2,10 @@ type User {
     id: ID!
     name: String!
     email: String!
-    role: String!
-    role_r: Role! @belongsTo
     password: String!
     email_verified_at: DateTime
+    role: [Role!]! @belongsToMany
+
 }
 
 type Tokens{

@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Auth\Role;
+use App\Models\Auth\User;
 
 class RolePolicy
 {
@@ -42,7 +42,7 @@ class RolePolicy
     public function create(User $user)
     {
        // $role = Role::has('permissions')->get();
-        return $user->is_active();
+       // return $user->roles()->;
     }
 
     /**
