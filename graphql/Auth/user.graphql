@@ -4,7 +4,7 @@ type User {
     email: String!
     password: String!
     email_verified_at: DateTime
-    role: [Role!]! @belongsToMany
+    roles: [Role!]! @belongsToMany
 
 }
 
@@ -35,7 +35,8 @@ extend type Mutation {
         @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_in")
 }
 
-extend type Query {
+extend type Query @guard{
     users: [User!]! @all
-    # users_by_email(email: String! @whereKey): User @all
+    users_by_email(email: String! @rules(apply: ["required"])
+        @eq): User @all
 }

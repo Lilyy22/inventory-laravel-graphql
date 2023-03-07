@@ -33,6 +33,5 @@ class EmailVerification extends Model
         return Carbon::now()
                     ->greaterThan($this->expiry_date) ? 
                     true : false;
-        
     }
 }

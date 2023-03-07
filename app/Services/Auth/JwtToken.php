@@ -10,12 +10,9 @@ use App\Services\Auth\Jwt;
 class JwtToken
 {
 
-    public static $access_exp = 1800; //expires after 15 min
-    public static $refresh_exp = 604800; //expires after 7 days
-     /*
-     * get user object
-     *
-     */
+    public static $access_exp = 1800; //expiry 15 min
+    public static $refresh_exp = 604800; //expiry 7 days
+    
     public static function getUser($jwt, $secret)
     {
         $payload = Jwt::decode($jwt, $secret);
@@ -45,9 +42,9 @@ class JwtToken
        if($user)
        {
          $payload = array("user_id"=> $user->id, 
-                            "role"=> "user", 
+                            "role"=> $user->roleNames(), 
                             "iat" => time(),
-                            "exp" => time() + static::$access_exp //expires after 15 min
+                            "exp" => time() + static::$access_exp 
                         );
             return Jwt::encode($payload, env('JWT_ACCESS_KEY'));
        }
@@ -64,9 +61,9 @@ class JwtToken
        if($user)
        {
         $payload = array("user_id"=> $user->id, 
-                    "role"=> "user", 
+                    "role"=> $user->roleNames(), 
                     "iat" => time(),
-                    "exp" => time() + static::$refresh_exp //expires after 7 days
+                    "exp" => time() + static::$refresh_exp 
                     );
             return Jwt::encode($payload, env('JWT_REFRESH_KEY'));
        }
@@ -98,8 +95,7 @@ class JwtToken
         {
             $token = RefreshToken::where('token', $refreshToken)->firstOrFail();
             
-            return ($token->expires_at < time()) ? false : $token;
-            
+            return ($token->is_expired()) ? false : $token;
 
         }catch(ModelNotFoundException $e)
         {

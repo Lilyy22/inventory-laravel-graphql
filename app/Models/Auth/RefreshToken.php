@@ -26,4 +26,9 @@ class RefreshToken extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function is_expired()
+    {
+       ($this->expires_at < time()) ? false : true;
+    }
+
 }

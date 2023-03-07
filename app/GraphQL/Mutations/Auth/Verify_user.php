@@ -5,6 +5,7 @@ namespace App\GraphQL\Mutations\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
 use App\Repositories\Auth\EmailVerificationRepository;
+use App\Events\VerifiedUser;
 
 final class Verify_user
 {
@@ -25,9 +26,9 @@ final class Verify_user
             else
             {
                 $email_verification->user()->update(['email_verified_at' => Carbon::now()]);
-                //update user email_verified_at to current date
-                (new EmailVerificationRepository)->verify($args['token']);
-
+                //pass the user to the event
+                VerifiedUser::dispatch($email_verification->user);
+                
                 return ["message" => "Account verified!"];
             }
         }

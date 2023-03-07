@@ -42,6 +42,13 @@ class UserRepository
         return User::where('email', $email)->firstOrFail();
     }
 
+    public static function getUnverifiedUser($email)
+    {
+        return User::where('email', $email)
+                    ->where('email_verified_at', null)
+                    ->firstOrFail();
+    }
+
     public function updatePassword($email, $password)
     {
         return User::where('email', $email)->update([

@@ -10,7 +10,7 @@ extend type Mutation{
      verify_user(input: VerifyInput! @spread): Message!
           @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Verify_user")
 
-     resend_verification_email(email: String!): Message!
+     resend_verification_email(email: String! @rules(apply: ["required", "email"])): Message!
           @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Resend_verification_email")
      
 }

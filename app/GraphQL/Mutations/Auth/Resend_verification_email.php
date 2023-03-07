@@ -2,9 +2,10 @@
 
 namespace App\GraphQL\Mutations\Auth;
 
+use App\Events\RegisteredUser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Events\SendMail;
 use App\Repositories\Auth\EmailVerificationRepository;
+use App\Repositories\Auth\UserRepository;
 use App\Services\Auth\Token;
  
 final class Resend_verification_email
@@ -15,16 +16,13 @@ final class Resend_verification_email
      */
     public function __invoke($_, array $args)
     {
-        // TODO implement the resolver
         try
         {
-            //throw Modelnotfound exception
-            $emailVerification = (new EmailVerificationRepository)->getUnverifiedToken($args['email']);
-
+            $user = (new UserRepository)->getUnverifiedUser($args['email']);
             $token = Token::getToken();
-            (new EmailVerificationRepository)->updateToken($emailVerification->email, $token);
-            //send email
-            SendMail::dispatch($emailVerification->user, $token);
+
+            (new EmailVerificationRepository)->updateOrCreate($user, $token);
+            RegisteredUser::dispatch($user, $token);
     
             return ['message'=> 'We have sent email with verification code.'];
             

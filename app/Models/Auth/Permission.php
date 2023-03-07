@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Auth\Role;
+use App\Models\Auth\User;
 
 class Permission extends Model
 {
@@ -15,12 +16,18 @@ class Permission extends Model
     public $incrementing = false;
     protected $keytype = 'uuid';
 
-    protected $fillable = [
-        'name'
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'slug'
+    // ];
 
     public function roles() : BelongsToMany
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function users() : BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
     }
 }

@@ -8,49 +8,20 @@ use Carbon\CarbonImmutable;
 class EmailVerificationRepository 
 {
 
-    // private $emailVerification;
+    private $expirytime = 1; 
 
-    // public function __construct(EmailVerification $emailVerification)
-    // {
-    //     $this->emailVerification = $emailVerification;
-    // }
-
-    public function create($user, $token)
+    public function updateOrCreate($user, $token)
     {
-        return EmailVerification::Create([
-                'email' => $user['email'],
+        return EmailVerification::updateOrCreate(
+            ['email' => $user['email']],
+            [
                 'token' => $token,
-                'expiry_date' => CarbonImmutable::now()->add(1, 'day'),
-                'is_verified' => false,
+                'expiry_date' => CarbonImmutable::now()->addHour($this->expirytime)
              ]);
-    }
-
-    public function updateToken($email, $token)
-    {
-        return EmailVerification::where('email', $email)
-                ->update([
-                    'token' => $token,
-                    'expiry_date' => CarbonImmutable::now()->add(1, 'day'),
-                ]);
-    }
-
-    public function verify($token)
-    {
-        return EmailVerification::where('token', $token)
-                ->update([
-                    'is_verified' => true,
-                ]);
     }
 
     public function getEmail($token)
     {
         return EmailVerification::where('token', $token)->firstOrFail();
-    }
-
-    public function getUnverifiedToken($email)
-    {
-        return EmailVerification::where('email', $email)
-                ->where('is_verified', false)
-                ->firstOrFail();
     }
 }

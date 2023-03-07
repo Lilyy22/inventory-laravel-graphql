@@ -2,8 +2,7 @@
 
 namespace App\GraphQL\Mutations\Auth;
 
-use App\Events\SendMail;
-use App\Mail\VerficationMailable;
+use App\Events\RegisteredUser;
 use App\Repositories\Auth\UserRepository;
 use App\Services\Auth\Token;
 use App\Repositories\Auth\EmailVerificationRepository;
@@ -19,8 +18,8 @@ final class Sign_up
         $user = UserRepository::create($args);
         $token = Token::getToken();
         //pass the user to the event
-        SendMail::dispatch($user, $token);
-        (new EmailVerificationRepository)->create($user, $token);
+        RegisteredUser::dispatch($user, $token);
+        (new EmailVerificationRepository)->updateOrCreate($user, $token);
 
         return ['message'=> 'We have send email with verification code.'];
     }

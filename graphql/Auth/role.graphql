@@ -3,7 +3,7 @@ type Role {
     remarks: String!
     created_at: DateTime
     updated_at: DateTime
-    user: [User!]! @belongsToMany
+    users: [User!]! @belongsToMany
 
 }
 
@@ -13,7 +13,10 @@ input RoleInput {
 }
 
 extend type Mutation @guard{
-    insert_role_one(input: RoleInput! @spread): Role! @create @can(ability: "create")
+    insert_role_one(input: RoleInput! @spread): Role! 
+                     @can(ability: "create", model: "App\\Models\\Auth\\Role", policy: "App\\Policies\\RolePolicy")
+                     @create(model: "App\\Models\\Auth\\Role")
+
     update_role_one(input: RoleInput! @spread): Role! @update
 }
 

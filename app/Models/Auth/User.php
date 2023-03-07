@@ -2,23 +2,25 @@
 
 namespace App\Models\Auth;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-//use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Auth\Role;
-use App\Models\EmailVerification;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 //use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Auth\Role;
+use App\Models\Auth\Permission;
+use App\Models\EmailVerification;
+use App\Trait\HasAuthorization;
+
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    use HasUuids;
+    use HasApiTokens, HasFactory, 
+        Notifiable, HasUuids, 
+        HasAuthorization;
     //use SoftDeletes;
 
     public $incrementing = false;
@@ -27,26 +29,17 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'password'
     ];
 
     protected $hidden = [
         'password',
-        'remember_token',
+        'remember_token'
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    // protected $attributes = [
-    //     'role' => 'user',
-    // ];
-
-    public function roles(): BelongsToMany 
-    {
-        return $this->belongsToMany(Role::class);
-    }
 
     public function email_verification(): HasOne
     {
@@ -57,6 +50,31 @@ class User extends Authenticatable
     {
         return $this->email_verified_at != null ? true : false; 
     }
-
     
+    public function hasPermission($permission)
+    {
+       return (bool) $this->permissions->where('slug', $permission->slug)->count();
+    }
+
+    public function hasRole($role)
+    {
+       return (bool) $this->roles->where('slug', $role->slug)->count();
+    }
+
+     public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function roleNames()
+    {
+        return $this->roles->map(function($item){
+             return $item->slug;
+        });
+    }
 }

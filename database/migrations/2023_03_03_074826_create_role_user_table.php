@@ -16,17 +16,16 @@ return new class extends Migration
         Schema::create('role_user', function (Blueprint $table) {
             $table->uuid('user_id');
             $table->uuid('role_id');
-
+            $table->primary(['user_id','role_id']);
+            
             $table->foreign('role_id')
                     ->references('id')
                     ->on('roles')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
+                    ->onUpdate('cascade');
             $table->foreign('user_id')
                     ->references('id')
                     ->on('users')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
+                    ->onUpdate('cascade');
         });
     }
 
