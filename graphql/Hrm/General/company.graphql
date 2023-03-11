@@ -1,0 +1,28 @@
+type Company {
+    name: String!
+    remark: String
+    logo: String
+}
+
+input CompanyInput{
+    name: String! @rules(["required"])
+    remark: String
+    logo: String
+}
+
+extend type Company @guard{
+    insert_company(input: CompanyInput! @spread): Company 
+        @create( model: "App\\Models\\Hrm\\General\\Company")
+
+    update_company(id: String! @eq, input: CompanyInput! @spread): Company 
+        @update( model: "App\\Models\\Hrm\\General\\Company")
+
+    delete_company(id: String!): Company 
+        @delete( model: "App\\Models\\Hrm\\General\\Company")
+
+    get_company(id: String!): Company 
+        @delete( model: "App\\Models\\Hrm\\General\\Company")
+        
+    get_all_company(id: String!): Company 
+        @delete( model: "App\\Models\\Hrm\\General\\Company")
+}

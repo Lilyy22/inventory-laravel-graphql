@@ -1,9 +1,8 @@
 <?php
 
 namespace App\GraphQL\Mutations\Auth;
-use App\Models\User;
+
 use App\Repositories\Auth\UserRepository;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 final class Change_password

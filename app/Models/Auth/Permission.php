@@ -17,6 +17,7 @@ class Permission extends Model
     protected $keytype = 'uuid';
 
     // protected $fillable = [
+    //     'id',
     //     'name',
     //     'slug'
     // ];

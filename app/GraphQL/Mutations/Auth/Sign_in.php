@@ -5,7 +5,6 @@ namespace App\GraphQL\Mutations\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Repositories\Auth\UserRepository;
 use App\Services\Auth\JwtToken;
-use Illuminate\Http\Request;
 
 final class Sign_in
 {
@@ -15,7 +14,6 @@ final class Sign_in
      */
     public function __invoke($_, array $args)
     {
-        // TODO implement the resolver
         try
         {
             $user = UserRepository::getUserByEmail($args['email']);
@@ -27,7 +25,7 @@ final class Sign_in
                     $access_token = JwtToken::accessToken($user);
                     $refresh_token = JwtToken::refreshToken($user);
                 
-                    JwtToken::storeRefreshToken($refresh_token, JwtToken::$refresh_exp, $user->id);
+                    JwtToken::storeRefreshToken($refresh_token, $user->id);
 
                     return ["access_token" => $access_token, 
                             "refresh_token"=> $refresh_token, 

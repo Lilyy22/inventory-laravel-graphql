@@ -1,0 +1,35 @@
+type Employee{
+    id: ID!
+    first_name: String!
+    last_name: String!
+    grand_father_name: String!
+    birth_date: String!
+    birth_place: String!
+    religion: String!
+    gender: String!
+    nationality: String!
+    marital_status: String!
+    additional_skill: String!
+    department_id: String!
+    user_id: String!
+    is_approved: String!
+}
+
+input EmployeeInput @validator{
+    first_name: String
+    last_name: String
+    grand_father_name: String
+    birth_date: DateTime
+    birth_place: String
+    religion: String
+    gender: String
+    nationality: String
+    marital_status: String
+    additional_skill: String
+    department_id: String
+}
+
+extend type Mutation @guard{
+    insert_employee(input: EmployeeInput @spread): Employee
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_employee")
+}

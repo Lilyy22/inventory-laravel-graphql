@@ -18,9 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('remark')->nullable();
             $table->string('phone_no');
-            // $table->string('manager_employee_id')->nullable();
             $table->uuid('company_id');
-            // $table->uuid('parent_id');
+            $table->uuid('parent_id')->nullable();
             $table->timestamps();
 
             $table->foreign('company_id')

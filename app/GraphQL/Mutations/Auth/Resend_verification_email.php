@@ -6,7 +6,7 @@ use App\Events\RegisteredUser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Repositories\Auth\EmailVerificationRepository;
 use App\Repositories\Auth\UserRepository;
-use App\Services\Auth\Token;
+use App\Services\Auth\RandToken;
  
 final class Resend_verification_email
 {
@@ -19,7 +19,7 @@ final class Resend_verification_email
         try
         {
             $user = (new UserRepository)->getUnverifiedUser($args['email']);
-            $token = Token::getToken();
+            $token = RandToken::getToken();
 
             (new EmailVerificationRepository)->updateOrCreate($user, $token);
             RegisteredUser::dispatch($user, $token);

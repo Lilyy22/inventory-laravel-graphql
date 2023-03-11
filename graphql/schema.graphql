@@ -3,6 +3,18 @@ scalar DateTime
 scalar Upload
     @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
+type Permission{
+    id: ID!
+    name: String!
+    slug: String!
+    created_at: DateTime
+    updated_at: DateTime
+    role: [Role!]! @belongsToMany
+}
+
+input PermissionInput{
+    id: String!
+}
 
 type Message{
     message: String! 

@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 //use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Auth\User;
 use App\Models\Auth\Permission;
+use App\Trait\HasAuthorization;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
-    use HasFactory;
-    use HasUuids;
+    use HasFactory, HasUuids, HasAuthorization;
     
     public $incrementing = false;
     protected $keytype = 'uuid';

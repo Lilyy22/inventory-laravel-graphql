@@ -51,30 +51,20 @@ class User extends Authenticatable
         return $this->email_verified_at != null ? true : false; 
     }
     
-    public function hasPermission($permission)
-    {
-       return (bool) $this->permissions->where('slug', $permission->slug)->count();
-    }
-
-    public function hasRole($role)
-    {
-       return (bool) $this->roles->where('slug', $role->slug)->count();
-    }
-
-     public function roles()
+     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
 
-    public function permissions()
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class);
     }
 
-    public function roleNames()
+    public function getRoles()
     {
-        return $this->roles->map(function($item){
-             return $item->slug;
-        });
+        return $this->roles()->pluck('name');
     }
+
+ 
 }

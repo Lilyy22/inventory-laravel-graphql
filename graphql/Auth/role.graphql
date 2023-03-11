@@ -1,22 +1,35 @@
 type Role {
+    id: ID!
     name: String!
-    remarks: String!
+    slug: String!
     created_at: DateTime
     updated_at: DateTime
     users: [User!]! @belongsToMany
-
+    permissions: [Permission!]! @belongsToMany
 }
 
 input RoleInput {
     name: String! @rules(apply: ["required","unique:roles,name"])
-    remarks: String
+    slug: String! @rules(apply: ["required","unique:roles,slug"])
 }
 
 extend type Mutation @guard{
     insert_role_one(input: RoleInput! @spread): Role! 
-                     @can(ability: "create", model: "App\\Models\\Auth\\Role", policy: "App\\Policies\\RolePolicy")
-                     @create(model: "App\\Models\\Auth\\Role")
+            @can(ability: "create", model: "App\\Models\\Auth\\Role", policy: "App\\Policies\\RolePolicy")
+            @create(model: "App\\Models\\Auth\\Role")
 
     update_role_one(input: RoleInput! @spread): Role! @update
+
+    assign_permissions_to_role(role_id: String!, permissions: [String!]!): Message!
+            @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Assign_permissions_to_role")
+
+    remove_permissions_from_role(role_id: String!, permissions: [String!]!): Message!
+            @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Remove_permissions_from_role")
+
+    delete_role(role_id: String!): Message!
+            @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Delete_role")
 }
 
+extend type Query @guard{
+    roles: [Role!]! @all(model: "App\\Models\\Auth\\Role")
+}

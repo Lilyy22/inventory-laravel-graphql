@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'jwt' => [
+        'access_token_key' => env('JWT_ACCESS_KEY', 'o!iotU@zw48GsPIx'),
+        'refresh_token_key' => env('JWT_REFRESH_KEY', 'zp@lxR<*u/zBmDE'),
+    ],
+
 ];

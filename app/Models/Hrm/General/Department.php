@@ -2,15 +2,15 @@
 
 namespace App\Models\Hrm\General;
 
+use App\Traits\HasDepartment;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Department extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, HasDepartment;
 
     protected $keytype = 'uuid';
     public $incrementing = false;
@@ -19,7 +19,6 @@ class Department extends Model
         'name',
         'remark',
         'phone_no',
-        'manager_employee_id',
         'company_id',
         'parent_id'
     ];
@@ -29,13 +28,18 @@ class Department extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function employee(): BelongsTo
-    {
-        return $this->belongsTo(Employee::class, 'manager_employee_id');
-    }
+    // public function employee(): BelongsTo
+    // {
+    //     return $this->belongsTo(Employee::class, 'manager_employee_id');
+    // }
 
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Department::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(static::class, $this->parentColumn);
     }
 }

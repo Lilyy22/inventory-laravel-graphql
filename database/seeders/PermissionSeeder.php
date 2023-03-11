@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Auth\Permission;
 use App\Models\Auth\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Auth\User;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class PermissionSeeder extends Seeder
 {
@@ -16,14 +18,27 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        
-        $permissions = new Permission();
-        $permissions->name = 'create user';
-        $permissions->slug = 'create-user';
-        $permissions->save();
+       
+        Permission::create(['name'=>'create-user']);
+        Permission::create(['name'=>'viewAll-user']);
+        Permission::create(['name'=>'create-role']);
+        Permission::create(['name'=>'update-role']);
+        Permission::create(['name'=>'viewAll-role']);
+        Permission::create(['name'=>'assign-role']);
+        Permission::create(['name'=>'delete-role']);
+
         Role::create([
-            'name'=>'user',
-            'slug' => 'user'
+            'name'=>'User',
+            'slug' => 'user']);
+        Role::create([
+            'name'=>'Super Admin',
+            'slug' => 'Super Admin']);
+
+       User::create([
+            'name' => 'admin',
+            'email' => 'gelilahhamid@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('Admin!@12'),
         ]);
 
         

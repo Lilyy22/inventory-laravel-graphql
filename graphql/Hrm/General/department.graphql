@@ -1,0 +1,33 @@
+type Department{
+    name: String!
+    remark: String
+    phone_no: String!
+    company_id: String!
+    parent_id: String!
+    company: [Company!]!
+}
+
+input DepartmentInput @validator{
+    name: String! @rules(["required"])
+    remark: String
+    phone_no: String
+    company_id: String! @rules(["required"])
+    parent_id: String
+}
+
+extend type Mutation @guard{
+    insert_department(input: DepartmentInput! @spread): Department 
+        @create( model: "App\\Models\\Hrm\\General\\Department")
+
+    update_department(id: String! @eq, input: DepartmentInput! @spread): Department 
+        @update( model: "App\\Models\\Hrm\\General\\Department")
+
+    delete_department(id: String!): Department 
+        @delete( model: "App\\Models\\Hrm\\General\\Department")
+
+    get_department(id: String!): Department 
+        @delete( model: "App\\Models\\Hrm\\General\\Department")
+        
+    get_all_department(id: String!): Department 
+        @delete( model: "App\\Models\\Hrm\\General\\Department")
+}

@@ -20,6 +20,7 @@ class UserRepository
                     'email' => $user['email'],
                     'password' => Hash::make($user['password']),
                 ]);
+
     }
 
     public static function destroy($id)

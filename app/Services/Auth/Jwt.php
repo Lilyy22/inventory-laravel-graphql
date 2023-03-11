@@ -7,9 +7,6 @@ class Jwt
 
     protected static $jwt_header = array("typ"=>"JWT", "alg"=>"HS256");  
     /*
-     *
-     * array<string, string> $head An array with header elements to attach
-     *
      * @return string A signed JWT
      *
      */
@@ -30,9 +27,8 @@ class Jwt
         return "$header_encoded.$payload_encoded.$signature_encoded";
     }
     /*
-     * get jwt-token
      *
-     * @return payload
+     * @return payload if verified
      *
      */
     public static function decode($jwt, string $secret)
