@@ -2,7 +2,7 @@
 
 namespace App\Models\Hrm\General;
 
-use App\Traits\HasDepartment;
+use App\Traits\HasDepartments;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Department extends Model
 {
-    use HasFactory, HasUuids, HasDepartment;
+    use HasFactory, HasUuids;
 
     protected $keytype = 'uuid';
     public $incrementing = false;

@@ -13,6 +13,8 @@ type Employee{
     department_id: String!
     user_id: String!
     is_approved: String!
+    department: Department!
+    user: User!
 }
 
 input EmployeeInput @validator{
@@ -33,7 +35,7 @@ extend type Mutation @guard{
     insert_employee(input: EmployeeInput @spread): Employee
         @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_employee")
         
-    update_employee(input: EmployeeInput @spread): Employee
-        @can(ability: "update", model: "App\\Models\\Auth\\User")
-        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Update_employee")
+    # update_employee(input: EmployeeInput @spread): Employee
+    #     @can(ability: "update", model: "App\\Models\\Auth\\User")
+    #     @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Update_employee")
 }

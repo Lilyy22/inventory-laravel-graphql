@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait HasDepartment
+trait HasDepartments
 {
     protected $parentColumn = 'parent_id';
     

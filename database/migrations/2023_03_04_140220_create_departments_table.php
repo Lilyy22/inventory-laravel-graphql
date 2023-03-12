@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('remark')->nullable();
-            $table->string('phone_no');
+            $table->string('phone_no')->nullable();
             $table->uuid('company_id');
             $table->uuid('parent_id')->nullable();
             $table->timestamps();
