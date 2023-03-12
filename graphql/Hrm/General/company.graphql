@@ -23,8 +23,8 @@ extend type Company @guard{
 
 extend type Query @guard{
     get_company(id: String!): Company 
-        @delete( model: "App\\Models\\Hrm\\General\\Company")
+        @all( model: "App\\Models\\Hrm\\General\\Company")
         
-    get_all_company(id: String!): Company 
-        @delete( model: "App\\Models\\Hrm\\General\\Company")
+    get_all_company(id: String! @eq): Company 
+        @all( model: "App\\Models\\Hrm\\General\\Company")
 }
