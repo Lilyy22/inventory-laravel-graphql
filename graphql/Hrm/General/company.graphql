@@ -19,7 +19,9 @@ extend type Company @guard{
 
     delete_company(id: String!): Company 
         @delete( model: "App\\Models\\Hrm\\General\\Company")
+}
 
+extend type Query @guard{
     get_company(id: String!): Company 
         @delete( model: "App\\Models\\Hrm\\General\\Company")
         

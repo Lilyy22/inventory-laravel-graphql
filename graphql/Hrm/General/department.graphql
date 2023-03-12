@@ -24,10 +24,12 @@ extend type Mutation @guard{
 
     delete_department(id: String!): Department 
         @delete( model: "App\\Models\\Hrm\\General\\Department")
+}
 
-    get_department(id: String!): Department 
-        @delete( model: "App\\Models\\Hrm\\General\\Department")
+extend type Query @guard{
+    get_department(id: String! @eq): Department 
+        @all( model: "App\\Models\\Hrm\\General\\Department")
         
     get_all_department(id: String!): Department 
-        @delete( model: "App\\Models\\Hrm\\General\\Department")
+        @all( model: "App\\Models\\Hrm\\General\\Department")
 }
