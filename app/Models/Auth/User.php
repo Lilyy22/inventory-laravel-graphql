@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Auth\Role;
 use App\Models\Auth\Permission;
 use App\Models\EmailVerification;
+use App\Models\Hrm\General\Employee;
 use App\Trait\HasAuthorization;
 
 
@@ -44,6 +45,11 @@ class User extends Authenticatable
     public function email_verification(): HasOne
     {
         return $this->hasOne(EmailVerification::class, 'email', 'email');
+    }
+
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class);
     }
 
     public function is_active()

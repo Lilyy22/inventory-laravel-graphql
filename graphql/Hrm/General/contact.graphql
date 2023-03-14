@@ -1,0 +1,41 @@
+type Contact{
+    id: UUID
+    phone_no: String
+    email: String
+    po_box: String
+    employee_id: UUID    
+    employee: Employee @belongsTo
+}
+
+input CreateContactInput{
+    phone_no: String! @rules(apply:["required"])
+    email: String! @rules(apply:["required"])
+    po_box: String! @rules(apply:["required"])
+    employee_id: UUID! @rules(apply:["required"])  
+}
+
+input UpdateContactInput{
+    phone_no: String
+    email: String
+    po_box: String
+    employee_id: UUID  
+}
+
+extend type Mutation{
+    insert_contact(input: CreateContactInput! @spread): Contact 
+        @create(model: "App\\Models\\Hrm\\General\\Contact")
+
+    update_contact(id: UUID! @rules(apply:["required"]) @eq, input: UpdateContactInput! @spread): Contact 
+        @update(model: "App\\Models\\Hrm\\General\\Contact")
+    
+    delete_contact(id: UUID! @rules(apply:["required"])): Contact 
+        @delete(model: "App\\Models\\Hrm\\General\\Contact")
+}
+
+# extend type Query @guard{
+#     get_contact(id: String! @rules(apply:["required"]) @eq): Contact
+#         @find(model: "App\\Models\\Hrm\\General\\Contact")
+        
+#     get_all_contact: [Contact]
+#         @all(model: "App\\Models\\Hrm\\General\\Contact")
+# }

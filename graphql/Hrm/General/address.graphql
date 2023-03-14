@@ -1,0 +1,50 @@
+type Address{
+    id: UUID
+    country: String
+    region: String
+    zone: String
+    woreda: String
+    house_no: String
+    employee_id: UUID
+    employee: Employee @belongsTo
+}
+
+input CreateAddressInput{
+    country: String! @rules(apply:["required"])
+    region: String! @rules(apply:["required"])
+    zone: String! @rules(apply:["required"])
+    woreda: String! @rules(apply:["required"])
+    house_no: String! @rules(apply:["required"])
+    employee_id: UUID! @rules(apply:["required"])
+}
+
+input UpdateAddressInput{
+    country: String
+    region: String
+    zone: String
+    woreda: String
+    house_no: String
+    employee_id: UUID
+}
+
+extend type Mutation{
+    insert_address_one(input: CreateAddressInput! @spread): Address 
+        @create(model: "App\\Models\\Hrm\\General\\Address")
+    
+    insert_addresses(input: [CreateAddressInput!]! @spread): Message 
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_addresses")
+
+    update_address(id: UUID! @rules(apply:["required"]) @eq, input: UpdateAddressInput! @spread): Address 
+        @update(model: "App\\Models\\Hrm\\General\\Address")
+    
+    delete_address(id: UUID! @rules(apply:["required"])): Address 
+        @delete(model: "App\\Models\\Hrm\\General\\Address")
+}
+
+# extend type Query @guard{
+#     get_address(id: String! @rules(apply:["required"]) @eq): Address
+#         @find(model: "App\\Models\\Hrm\\General\\Address")
+        
+#     get_all_address: [Address]
+#         @all(model: "App\\Models\\Hrm\\General\\Address")
+# }

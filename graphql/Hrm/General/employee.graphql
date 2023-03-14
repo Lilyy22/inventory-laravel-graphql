@@ -1,23 +1,44 @@
 type Employee{
-    id: ID!
-    first_name: String!
-    last_name: String!
-    grand_father_name: String!
-    birth_date: String!
-    birth_place: String!
-    religion: String!
-    gender: String!
-    nationality: String!
-    marital_status: String!
-    additional_skill: String!
-    department_id: String!
-    user_id: String!
-    is_approved: String!
-    department: Department!
-    user: User!
+    id: ID
+    first_name: String
+    last_name: String
+    grand_father_name: String
+    birth_date: String
+    birth_place: String
+    religion: String
+    gender: String
+    nationality: String
+    marital_status: String
+    additional_skill: String
+    department_id: UUID
+    user_id: UUID
+    is_approved: String
+
+    department: Department @belongsTo
+    user: User @belongsTo
+
+    addresses: [Address] @hasMany
+    contacts: [Contact] @hasMany
+    disabilities: [Disability] @hasMany
+    educations: [Education] @hasMany
 }
 
-input EmployeeInput @validator{
+input CreateEmployeeInput{
+    first_name: String! @rules(apply:["required"])
+    last_name: String!  @rules(apply:["required"])
+    grand_father_name: String!  @rules(apply:["required"])
+    birth_date: DateTime @rules(apply:["required"])
+    birth_place: String!  @rules(apply:["required"])
+    religion: String!  @rules(apply:["required"])
+    gender: String!  @rules(apply:["required"])
+    nationality: String!  @rules(apply:["required"])
+    marital_status: String!  @rules(apply:["required"])
+    additional_skill: String
+    department_id: UUID!  @rules(apply:["required"])
+    user_id: UUID!  @rules(apply:["required"])
+}
+
+input UpdateEmployeeInput{
     first_name: String
     last_name: String
     grand_father_name: String
@@ -28,14 +49,23 @@ input EmployeeInput @validator{
     nationality: String
     marital_status: String
     additional_skill: String
-    department_id: String
+    department_id: UUID
+    user_id: UUID
 }
 
 extend type Mutation @guard{
-    insert_employee(input: EmployeeInput @spread): Employee
+    insert_employee(input: CreateEmployeeInput! @spread): Employee
         @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_employee")
         
-    # update_employee(input: EmployeeInput @spread): Employee
-    #     @can(ability: "update", model: "App\\Models\\Auth\\User")
-    #     @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Update_employee")
+    update_employee(id: UUID! @rules(apply:["required"]) @eq, input: UpdateEmployeeInput! @spread): Employee
+        @can(ability: "update", model: "App\\Models\\Auth\\User")
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Update_employee")
+}
+
+extend type Query @guard{
+    get_employee(id: UUID! @rules(apply:["required"]) @eq): Employee
+        @find(model: "App\\Models\\Hrm\\General\\Employee")
+        
+    get_all_employee: [Employee]
+        @all(model: "App\\Models\\Hrm\\General\\Employee")
 }

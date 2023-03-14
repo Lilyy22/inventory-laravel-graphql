@@ -18,7 +18,7 @@ final class Insert_employee
         {
              $employee = (new EmployeeRepository)->create($args, Auth::user());
 
-             return[$employee];
+             return $employee;
         } 
 
         return['something went wrong'];

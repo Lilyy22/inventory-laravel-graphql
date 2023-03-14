@@ -19,6 +19,6 @@ class Address extends Model
         'zone',
         'woreda',
         'house_no',
-        'employee'
+        'employee_id'
     ];
 }

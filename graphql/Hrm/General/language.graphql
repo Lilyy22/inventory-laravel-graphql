@@ -1,0 +1,50 @@
+type Language{
+    id: UUID
+    language: String
+    read: String
+    write: String
+    speak: String
+    listen: String
+    employee_id: UUID
+    employee: Employee @belongsTo
+}
+
+input CreateLanguageInput{
+    language: String! @rules(apply:["required"])
+    read: String! @rules(apply:["required"])
+    write: String! @rules(apply:["required"])
+    speak: String! @rules(apply:["required"])
+    listen: String! @rules(apply:["required"])
+    employee_id: UUID! @rules(apply:["required"])
+}
+
+input UpdateLanguageInput{
+   language: String
+    read: String
+    write: String
+    speak: String
+    listen: String
+    employee_id: UUID
+}
+
+extend type Mutation{
+    insert_language_one(input: CreateLanguageInput! @spread): Language 
+        @create(model: "App\\Models\\Hrm\\General\\Language")
+    
+    # insert_languages(input: [CreateLanguageInput!]! @spread): Message 
+    #     @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_Families")
+
+    update_language(id: UUID! @rules(apply:["required"]) @eq, input: UpdateLanguageInput! @spread): Language 
+        @update(model: "App\\Models\\Hrm\\General\\Language")
+    
+    delete_language(id: UUID! @rules(apply:["required"])): Language 
+        @delete(model: "App\\Models\\Hrm\\General\\Language")
+}
+
+# extend type Query @guard{
+#     get_address(id: String! @rules(apply:["required"]) @eq): Address
+#         @find(model: "App\\Models\\Hrm\\General\\Address")
+        
+#     get_all_address: [Address]
+#         @all(model: "App\\Models\\Hrm\\General\\Address")
+# }

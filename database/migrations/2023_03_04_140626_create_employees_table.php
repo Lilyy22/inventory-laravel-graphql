@@ -18,14 +18,14 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('grand_father_name');
-            $table->timestamp('birth_date');
+            $table->date('birth_date');
             $table->string('birth_place');
             $table->string('religion');
             $table->string('gender');
             $table->string('nationality');
             $table->string('marital_status');
             $table->longText('additional_skill')->nullable();
-            $table->uuid('user_id');
+            $table->uuid('user_id')->unique();
             $table->uuid('department_id');
             $table->boolean('is_approved')->nullable();
             $table->timestamps();

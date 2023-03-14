@@ -1,5 +1,5 @@
 type Role {
-    id: ID!
+    id: UUID!
     name: String!
     slug: String!
     created_at: DateTime
@@ -20,13 +20,13 @@ extend type Mutation @guard{
 
     update_role_one(input: RoleInput! @spread): Role! @update
 
-    assign_permissions_to_role(role_id: String!, permissions: [String!]!): Message!
+    assign_permissions_to_role(role_id: UUID!, permissions: [UUID!]!): Message!
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Assign_permissions_to_role")
 
-    remove_permissions_from_role(role_id: String!, permissions: [String!]!): Message!
+    remove_permissions_from_role(role_id: UUID!, permissions: [UUID!]!): Message!
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Remove_permissions_from_role")
 
-    delete_role(role_id: String!): Message!
+    delete_role(role_id: UUID!): Message!
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Delete_role")
 }
 

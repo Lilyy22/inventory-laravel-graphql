@@ -2,7 +2,7 @@
 
 namespace App\Models\Hrm\General;
 
-use App\Traits\HasDepartments;
+// use App\Traits\HasDepartments;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

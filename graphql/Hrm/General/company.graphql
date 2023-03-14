@@ -1,6 +1,6 @@
 type Company {
-    id: ID!
-    name: String!
+    id: UUID
+    name: String
     remark: String
     logo: String
 }
@@ -15,15 +15,17 @@ extend type Mutation @guard{
     insert_company(input: CompanyInput! @rules(apply:["required"]) @spread): Company 
         @create( model: "App\\Models\\Hrm\\General\\Company")
 
-    update_company(id: String! @rules(apply:["required"]) @eq, input: CompanyInput! @spread): Company 
+    update_company(id: UUID! @rules(apply:["required"]) @eq, input: CompanyInput! @spread): Company 
         @update( model: "App\\Models\\Hrm\\General\\Company")
 
-    delete_company(id: String! @rules(apply:["required"])): Company 
+    delete_company(id: UUID! @rules(apply:["required"])): Company 
         @delete( model: "App\\Models\\Hrm\\General\\Company")
 }
 
-# extend type Query @guard{
-#     get_company(id: String! @rules(apply:["required"]) @eq): Company! @all(model: "App\\Models\\Hrm\\General\\Company")
+extend type Query @guard{
+    get_company(id: UUID! @rules(apply:["required"]) @eq): Company
+        @find(model: "App\\Models\\Hrm\\General\\Company")
         
-#     get_all_company: Company! @all(model: "App\\Models\\Hrm\\General\\Company")
-# }
+    get_all_company: [Company]
+        @all(model: "App\\Models\\Hrm\\General\\Company")
+}

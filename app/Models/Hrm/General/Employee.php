@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Model\Auth\User;
-use App\Model\Hrm\General\Department;
-use App\Model\Hrm\General\Contact;
-use App\Model\Hrm\General\Education;
-use App\Model\Hrm\General\Family;
+use App\Models\Auth\User;
+use App\Models\Hrm\General\Department;
+use App\Models\Hrm\General\Contact;
+use App\Models\Hrm\General\Education;
+use App\Models\Hrm\General\Family;
 use App\Models\Hrm\General\Language;
 use App\Models\Hrm\General\EmergencyContact;
-use App\Model\Hrm\General\Experience;
+use App\Models\Hrm\General\Experience;
 use App\Models\Hrm\General\Reference;
 use App\Models\Hrm\General\Address;
 use App\Models\Hrm\General\Disability;
@@ -57,7 +57,7 @@ class Employee extends Model
         return $this->hasMany(Contact::class);
     }
 
-    public function addresss(): HasMany
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }

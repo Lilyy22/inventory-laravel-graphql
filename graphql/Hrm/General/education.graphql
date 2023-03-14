@@ -1,0 +1,56 @@
+type Education{
+    id: UUID
+    institution: String
+    city: String
+    major: String
+    level: String
+    gpa: String
+    start_date: Date
+    end_date: Date
+    employee_id: UUID    
+    employee: Employee @belongsTo
+}
+
+input CreateEducationInput{
+    institution: String! @rules(apply:["required"]) 
+    city: String! @rules(apply:["required"]) 
+    major: String! @rules(apply:["required"]) 
+    level: String! @rules(apply:["required"]) 
+    gpa: String! @rules(apply:["required"]) 
+    start_date: Date! @rules(apply:["required"]) 
+    end_date: Date! @rules(apply:["required"]) 
+    employee_id: UUID! @rules(apply:["required"])    
+}
+
+input UpdateEducationInput{
+    institution: String
+    city: String
+    major: String
+    level: String
+    gpa: String
+    start_date: Date
+    end_date: Date
+    employee_id: UUID   
+}
+
+extend type Mutation{
+    insert_education(input: CreateEducationInput! @spread): Education 
+        @create(model: "App\\Models\\Hrm\\General\\Education")
+
+   insert_educations(input: [CreateEducationInput!]! @spread): Message 
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_educations")
+
+    update_education(id: UUID! @rules(apply:["required"]) @eq, input: UpdateEducationInput! @spread): Education 
+        @update(model: "App\\Models\\Hrm\\General\\Education")
+    
+    delete_education(id: UUID! @rules(apply:["required"])): Education 
+        @delete(model: "App\\Models\\Hrm\\General\\Education")
+}
+
+# extend type Query @guard{
+#     get_education(id: String! @rules(apply:["required"]) @eq): Address
+#         @find(model: "App\\Models\\Hrm\\General\\Address")
+        
+#     get_all_address: [Address]
+#         @all(model: "App\\Models\\Hrm\\General\\Address")
+# }

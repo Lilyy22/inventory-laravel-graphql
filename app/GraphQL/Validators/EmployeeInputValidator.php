@@ -41,9 +41,6 @@ final class EmployeeInputValidator extends Validator
             'marital_status'=> [
                 'required', 
             ],
-            'additional_skill'=> [
-                'required', 
-            ],
             'department_id'=> [
                 'required', 
             ],

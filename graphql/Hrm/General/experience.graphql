@@ -1,0 +1,50 @@
+type Experience{
+    id: UUID
+    company_name: String
+    position: String
+    start_date: Date
+    end_date: Date
+    resignation_reason: String
+    employee_id: UUID
+    employee: Employee @belongsTo
+}
+
+input CreateExperienceInput{
+    company_name: String! @rules(apply:["required"])
+    position: String! @rules(apply:["required"])
+    start_date: Date! @rules(apply:["required"])
+    end_date: Date! @rules(apply:["required"])
+    resignation_reason: String! @rules(apply:["required"])
+    employee_id: UUID! @rules(apply:["required"])
+}
+
+input UpdateExperienceInput{
+    company_name: String
+    position: String
+    start_date: Date
+    end_date: Date
+    resignation_reason: String
+    employee_id: UUID
+}
+
+extend type Mutation{
+    insert_experience_one(input: CreateExperienceInput! @spread): Experience 
+        @create(model: "App\\Models\\Hrm\\General\\Experience")
+    
+    # insert_experiences(input: [CreateExperienceInput!]! @spread): Message 
+    #     @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_experiences")
+
+    update_experience(id: UUID! @rules(apply:["required"]) @eq, input: UpdateExperienceInput! @spread): Experience 
+        @update(model: "App\\Models\\Hrm\\General\\Experience")
+    
+    delete_experience(id: UUID! @rules(apply:["required"])): Experience 
+        @delete(model: "App\\Models\\Hrm\\General\\Experience")
+}
+
+# extend type Query @guard{
+#     get_address(id: String! @rules(apply:["required"]) @eq): Address
+#         @find(model: "App\\Models\\Hrm\\General\\Address")
+        
+#     get_all_address: [Address]
+#         @all(model: "App\\Models\\Hrm\\General\\Address")
+# }

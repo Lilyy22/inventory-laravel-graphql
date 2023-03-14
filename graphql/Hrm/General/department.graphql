@@ -1,44 +1,44 @@
 type Department{
-    id: ID!
-    name: String!
+    id: UUID
+    name: String
     remark: String
-    phone_no: String!
-    company_id: String!
-    parent_id: String!
-    company: Company!
+    phone_no: String
+    company_id: UUID
+    parent_id: UUID
+    company: Company @belongsTo
 }
 
 input CreateDepartmentInput{
     name: String! @rules(apply:["required"])
     remark: String
     phone_no: String
-    company_id: String! @rules(apply:["required"])
-    parent_id: String
+    company_id: UUID! @rules(apply:["required"])
+    parent_id: UUID
 }
 
 input UpdateDepartmentInput{
     name: String
     remark: String
     phone_no: String
-    company_id: String
-    parent_id: String
+    company_id: UUID
+    parent_id: UUID
 }
 
 extend type Mutation @guard{
-    insert_department(input: DepartmentInput! @spread): Department 
-        @create( model: "App\\Models\\Hrm\\General\\Department")
+    insert_department(input: CreateDepartmentInput! @spread): Department 
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_department")
 
-    update_department(id: String! @rules(apply:["required"]) @eq, input: UpdateDepartmentInput! @spread): Department 
-        @update( model: "App\\Models\\Hrm\\General\\Department")
+    update_department(id: UUID! @rules(apply:["required"]) @eq, input: UpdateDepartmentInput! @spread): Department 
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Update_department")
 
-    delete_department(id: String! @rules(apply:["required"])): Department 
+    delete_department(id: UUID! @rules(apply:["required"])): Department 
         @delete( model: "App\\Models\\Hrm\\General\\Department")
 }
 
-# extend type Query @guard{
-#     get_department(id: String! @eq): Department 
-#         @all( model: "App\\Models\\Hrm\\General\\Department")
+extend type Query @guard{
+    get_department(id: UUID! @rules(apply:["required"]) @eq): Department 
+        @find(model: "App\\Models\\Hrm\\General\\Department")
         
-#     get_all_department(id: String!): Department 
-#         @all( model: "App\\Models\\Hrm\\General\\Department")
-# }
+    get_all_department: [Department] 
+         @all(model: "App\\Models\\Hrm\\General\\Department")
+}

@@ -1,0 +1,38 @@
+type Disability{
+    id: UUID
+    disability: String
+    remark: String
+    employee_id: UUID    
+    employee: Employee @belongsTo
+}
+
+input CreateDisabilityInput{
+    disability: String! @rules(apply:["required"])
+    remark: String
+    employee_id: UUID! @rules(apply:["required"])  
+}
+
+input UpdateDisabilityInput{
+    disability: String
+    remark: String
+    employee_id: UUID   
+}
+
+extend type Mutation{
+    insert_disability(input: CreateDisabilityInput! @spread): Disability 
+        @create(model: "App\\Models\\Hrm\\General\\Disability")
+
+    update_disability(id: UUID! @rules(apply:["required"]) @eq, input: UpdateDisabilityInput! @spread): Disability 
+        @update(model: "App\\Models\\Hrm\\General\\Disability")
+    
+    delete_disability(id: UUID! @rules(apply:["required"])): Disability 
+        @delete(model: "App\\Models\\Hrm\\General\\Disability")
+}
+
+# extend type Query @guard{
+#     get_disability(id: String! @rules(apply:["required"]) @eq): Disability
+#         @find(model: "App\\Models\\Hrm\\General\\Disability")
+        
+#     get_all_disability: [Disability]
+#         @all(model: "App\\Models\\Hrm\\General\\Disability")
+# }
