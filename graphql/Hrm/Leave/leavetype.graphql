@@ -1,0 +1,37 @@
+type LeaveType{
+    id: UUID
+    type: String
+    remark: String
+    no_of_days: Int
+}
+
+input CreateLeaveType{
+    type: String! @rules(apply: ["required"])
+    remark: String
+    no_of_days: Int! @rules(apply: ["required"])
+}
+
+input UpdateLeaveType{
+    type: String
+    remark: String
+    no_of_days: String
+}
+
+extend type Mutation @guard{
+    insert_leave_type(input: CreateLeaveTypeInput! @rules(apply:["required"]) @spread): LeaveType 
+        @create( model: "App\\Models\\Hrm\\Leave\\LeaveType")
+
+    update_leave_type(id: UUID! @rules(apply:["required"]) @eq, input: UpdateLeaveTypeInput! @spread): LeaveType 
+        @update( model: "App\\Models\\Hrm\\Leave\\LeaveType")
+
+    delete_leave_type(id: UUID! @rules(apply:["required"])): LeaveType 
+        @delete( model: "App\\Models\\Hrm\\Leave\\LeaveType")
+}
+
+extend type Query @guard{
+    get_leave_type(id: UUID! @rules(apply:["required"]) @eq): LeaveType
+        @find(model: "App\\Models\\Hrm\\Leave\\LeaveType")
+        
+    get_all_leave_type: [LeaveType]
+        @all(model: "App\\Models\\Hrm\\Leave\\LeaveType")
+}

@@ -18,17 +18,17 @@ input UpdateEmergencyContactInput{
     employee_id: UUID 
 }
 
-extend type Mutation{
-    insert_emergencyContact_one(input: CreateEmergencyContactInput! @spread): EmergencyContact 
+extend type Mutation @guard{
+    insert_emergency_contact_one(input: CreateEmergencyContactInput! @spread): EmergencyContact 
         @create(model: "App\\Models\\Hrm\\General\\EmergencyContact")
     
-    # insert_emergencyContacts(input: [CreateEmergencyContactInput!]! @spread): Message 
-    #     @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_emergencyContacts")
+    insert_emergency_contacts(input: [CreateEmergencyContactInput!]! @spread): [EmergencyContact] 
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_emergencyContacts")
 
-    update_emergencyContact(id: UUID! @rules(apply:["required"]) @eq, input: UpdateEmergencyContactInput! @spread): EmergencyContact 
+    update_emergency_contact(id: UUID! @rules(apply:["required"]) @eq, input: UpdateEmergencyContactInput! @spread): EmergencyContact 
         @update(model: "App\\Models\\Hrm\\General\\EmergencyContact")
     
-    delete_emergencyContact(id: UUID! @rules(apply:["required"])): EmergencyContact 
+    delete_emergency_contact(id: UUID! @rules(apply:["required"])): EmergencyContact 
         @delete(model: "App\\Models\\Hrm\\General\\EmergencyContact")
 }
 

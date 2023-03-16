@@ -21,7 +21,7 @@ input UpdateContactInput{
     employee_id: UUID  
 }
 
-extend type Mutation{
+extend type Mutation @guard{
     insert_contact(input: CreateContactInput! @spread): Contact 
         @create(model: "App\\Models\\Hrm\\General\\Contact")
 

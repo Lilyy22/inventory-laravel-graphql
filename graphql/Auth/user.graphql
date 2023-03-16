@@ -23,32 +23,34 @@ input SignInInput @validator{
 
 extend type Mutation {
     sign_up(input: SignUpInput! @spread): Message! 
-            @can(ability: "create", model: "App\\Models\\Auth\\User")
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_up")
     
     sign_in(input: SignInInput! @spread): Tokens!
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Sign_in")
+}
 
+extend type Mutation @guard{
     assign_permissions_to_user(user_id: UUID! @rules(apply:["required"]), permissions: [UUID!]!): Message!
-            @can(ability: "assign-permission", model: "App\\Models\\Auth\\User")
+            @can(ability: "assign_permission", model: "App\\Models\\Auth\\User")
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Assign_permissions_to_user")
 
     assign_roles_to_user(user_id: UUID! @rules(apply:["required"]), roles: [UUID!]!): Message!
-            @can(ability: "assign-permission", model: "App\\Models\\Auth\\User")
+            @can(ability: "assign_role", model: "App\\Models\\Auth\\User")
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Assign_roles_to_user")
     
     remove_permissions_from_user(user_id: UUID! @rules(apply:["required"]), permissions: [UUID!]!): Message!
-            @can(ability: "remove-permission", model: "App\\Models\\Auth\\User")
+            @can(ability: "remove_permission", model: "App\\Models\\Auth\\User")
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Remove_permissions_from_user")
     
-    remove_roles_from_user(user_id: UUID! @rules(apply:["required"]), permissions: [UUID!]!): Message!
-            @can(ability: "remove-permission", model: "App\\Models\\Auth\\User")
+    remove_roles_from_user(user_id: UUID! @rules(apply:["required"]), roles: [UUID!]!): Message!
+            @can(ability: "remove_role", model: "App\\Models\\Auth\\User")
             @field(resolver: "App\\GraphQL\\Mutations\\Auth\\Autho\\Remove_roles_from_user")
 }
 
 extend type Query @guard{
     users: [User!] @all(model: "App\\Models\\Auth\\User")
             @can(ability: "viewAll", model: "App\\Models\\Auth\\User")
+
     get_user(id: UUID!): User @all(model: "App\\Models\\Auth\\User")
             @can(ability: "view", model: "App\\Models\\Auth\\User")
 }

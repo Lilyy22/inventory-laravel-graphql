@@ -33,11 +33,11 @@ input UpdateEducationInput{
     employee_id: UUID   
 }
 
-extend type Mutation{
+extend type Mutation @guard{
     insert_education(input: CreateEducationInput! @spread): Education 
         @create(model: "App\\Models\\Hrm\\General\\Education")
 
-   insert_educations(input: [CreateEducationInput!]! @spread): Message 
+    insert_educations(input: [CreateEducationInput!]! @spread): [Education] 
         @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_educations")
 
     update_education(id: UUID! @rules(apply:["required"]) @eq, input: UpdateEducationInput! @spread): Education 

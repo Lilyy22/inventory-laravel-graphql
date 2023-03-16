@@ -20,12 +20,15 @@ class PermissionSeeder extends Seeder
     {
        
         Permission::create(['name'=>'create-user']);
-        Permission::create(['name'=>'viewAll-user']);
+        $Permission5 = Permission::create(['name'=>'viewAll-user']);
+        Permission::create(['name'=>'view-user']);
         Permission::create(['name'=>'create-role']);
         Permission::create(['name'=>'update-role']);
         Permission::create(['name'=>'viewAll-role']);
-        Permission::create(['name'=>'assign-role']);
-        Permission::create(['name'=>'delete-role']);
+        $Permission1 = Permission::create(['name'=>'assign-role']);
+        $Permission2 = Permission::create(['name'=>'remove-role']);
+        $Permission3 = Permission::create(['name'=>'assign-permission']);
+        $Permission4 = Permission::create(['name'=>'remove-permission']);
 
         Role::create([
             'name'=>'User',
@@ -34,12 +37,15 @@ class PermissionSeeder extends Seeder
             'name'=>'Super Admin',
             'slug' => 'Super Admin']);
 
-       User::create([
+       $user = User::create([
             'name' => 'admin',
             'email' => 'gelilahhamid@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('Admin!@12'),
         ]);
+
+        $permissions = array($Permission1->id, $Permission2->id, $Permission3->id, $Permission4->id, $Permission5->id);
+        $user->givePermission($permissions);
 
         
     }

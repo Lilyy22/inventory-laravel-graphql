@@ -15,17 +15,19 @@ final class Insert_addresses
     {
         try
         {
+            $addresses = array();
             foreach($args['input'] as $address)
             {
-                Address::create($address);
+                $addr = Address::create($address);
+                array_push($addresses, $addr);
             }
 
-            return ["message" => "created"];
+            return $addresses;
 
         }catch(QueryException $e)
         {
             // return $e;
-            return ["message" => "something went wrong."];;
+            return "something went wrong.";
         }
     }
 }

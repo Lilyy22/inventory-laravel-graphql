@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Models\Hrm\General;
+namespace App\Models\Hrm\Leave;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Address extends Model
+class EmployeeLeaveRequest extends Model
 {
     use HasFactory, HasUuids;
 
@@ -15,16 +14,12 @@ class Address extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'country',
-        'region',
-        'zone',
-        'woreda',
-        'house_no',
+        'leave_type_id',
+        'remark',
+        'is_approved',
+        'approver_id',
+        'start_date',
+        'end_date',
         'employee_id'
     ];
-
-    public function employee(): BelongsTo
-    {
-        return $this->belongsTo(Address::class);
-    }
 }

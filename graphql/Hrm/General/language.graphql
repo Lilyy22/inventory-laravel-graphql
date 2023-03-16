@@ -27,12 +27,12 @@ input UpdateLanguageInput{
     employee_id: UUID
 }
 
-extend type Mutation{
+extend type Mutation @guard{
     insert_language_one(input: CreateLanguageInput! @spread): Language 
         @create(model: "App\\Models\\Hrm\\General\\Language")
     
-    # insert_languages(input: [CreateLanguageInput!]! @spread): Message 
-    #     @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_Families")
+    insert_languages(input: [CreateLanguageInput!]! @spread): [Language] 
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_languages")
 
     update_language(id: UUID! @rules(apply:["required"]) @eq, input: UpdateLanguageInput! @spread): Language 
         @update(model: "App\\Models\\Hrm\\General\\Language")

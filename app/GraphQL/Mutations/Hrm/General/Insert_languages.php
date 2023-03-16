@@ -2,10 +2,10 @@
 
 namespace App\GraphQL\Mutations\Hrm\General;
 
-use App\Models\Hrm\General\Education;
+use App\Models\Hrm\General\Language;
 use Illuminate\Database\QueryException;
 
-final class Insert_educations
+final class Insert_languages
 {
     /**
      * @param  null  $_
@@ -15,14 +15,14 @@ final class Insert_educations
     {
         try
         {
-            $educations = array();
-            foreach($args['input'] as $education)
+            $languages = array();
+            foreach($args['input'] as $language)
             {
-                $educ = Education::create($education);
-                array_push($educations, $educ);
+                $lang = Language::create($language);
+                array_push($languages, $lang);
             }
 
-            return $educations;
+            return $languages;
 
         }catch(QueryException $e)
         {

@@ -18,9 +18,12 @@ input UpdateDisabilityInput{
     employee_id: UUID   
 }
 
-extend type Mutation{
+extend type Mutation @guard{
     insert_disability(input: CreateDisabilityInput! @spread): Disability 
         @create(model: "App\\Models\\Hrm\\General\\Disability")
+
+    insert_disabilities(input: [CreateDisabilityInput!]! @spread): [Disability] 
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_disabilities")
 
     update_disability(id: UUID! @rules(apply:["required"]) @eq, input: UpdateDisabilityInput! @spread): Disability 
         @update(model: "App\\Models\\Hrm\\General\\Disability")

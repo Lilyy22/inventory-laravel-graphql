@@ -2,10 +2,10 @@
 
 namespace App\GraphQL\Mutations\Hrm\General;
 
-use App\Models\Hrm\General\Education;
+use App\Models\Hrm\General\Disability;
 use Illuminate\Database\QueryException;
 
-final class Insert_educations
+final class Insert_disabilities
 {
     /**
      * @param  null  $_
@@ -15,14 +15,14 @@ final class Insert_educations
     {
         try
         {
-            $educations = array();
-            foreach($args['input'] as $education)
+            $disabilities = array();
+            foreach($args['input'] as $disability)
             {
-                $educ = Education::create($education);
-                array_push($educations, $educ);
+                $dis = Disability::create($disability);
+                array_push($disabilities, $dis);
             }
 
-            return $educations;
+            return $disabilities;
 
         }catch(QueryException $e)
         {

@@ -21,12 +21,12 @@ input UpdateFamilyInput{
     employee_id: UUID
 }
 
-extend type Mutation{
+extend type Mutation @guard{
     insert_family_one(input: CreateFamilyInput! @spread): Family 
         @create(model: "App\\Models\\Hrm\\General\\Family")
     
-    # insert_families(input: [CreateFamilyInput!]! @spread): Message 
-    #     @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_families")
+    insert_families(input: [CreateFamilyInput!]! @spread): [Family] 
+        @field(resolver: "App\\GraphQL\\Mutations\\Hrm\\General\\Insert_families")
 
     update_family(id: UUID! @rules(apply:["required"]) @eq, input: UpdateFamilyInput! @spread): Family 
         @update(model: "App\\Models\\Hrm\\General\\Family")

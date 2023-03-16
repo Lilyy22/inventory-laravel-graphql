@@ -2,10 +2,10 @@
 
 namespace App\GraphQL\Mutations\Hrm\General;
 
-use App\Models\Hrm\General\Education;
+use App\Models\Hrm\General\Experience;
 use Illuminate\Database\QueryException;
 
-final class Insert_educations
+final class Insert_experiences
 {
     /**
      * @param  null  $_
@@ -15,14 +15,14 @@ final class Insert_educations
     {
         try
         {
-            $educations = array();
-            foreach($args['input'] as $education)
+            $experiences = array();
+            foreach($args['input'] as $experience)
             {
-                $educ = Education::create($education);
-                array_push($educations, $educ);
+                $exp = Experience::create($experience);
+                array_push($experiences, $exp);
             }
 
-            return $educations;
+            return $experiences;
 
         }catch(QueryException $e)
         {

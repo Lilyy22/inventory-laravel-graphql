@@ -63,7 +63,7 @@ trait HasAuthorization
     */
    public function hasPermission($permission)
    {
-      return (bool) $this->permissions()->where('slug', $permission)->count();
+      return (bool) $this->permissions()->where('name', $permission)->count();
    }
 
    /**
@@ -87,7 +87,7 @@ trait HasAuthorization
     */
    public function hasRole($role)
    {
-      return (bool) $this->roles()->where('slug', $role->slug)->count();
+      return (bool) $this->roles()->where('name', $role->name)->count();
    }
 
    
