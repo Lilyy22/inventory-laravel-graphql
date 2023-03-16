@@ -5,13 +5,13 @@ type LeaveType{
     no_of_days: Int
 }
 
-input CreateLeaveType{
+input CreateLeaveTypeInput{
     type: String! @rules(apply: ["required"])
     remark: String
     no_of_days: Int! @rules(apply: ["required"])
 }
 
-input UpdateLeaveType{
+input UpdateLeaveTypeInput{
     type: String
     remark: String
     no_of_days: String
