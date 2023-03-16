@@ -25,7 +25,7 @@ type Message{
 
 type Query {
     ping: String! 
-         @field(resolver: "App\\GraphQL\\Mutations\\ping")
+         @field(resolver: "App\\GraphQL\\Mutations\\Ping")
 }
 
 type Mutation
