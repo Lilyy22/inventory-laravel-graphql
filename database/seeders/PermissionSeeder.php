@@ -19,7 +19,7 @@ class PermissionSeeder extends Seeder
     public function run()
     {
        
-        Permission::create(['name'=>'create-user']);
+        $Permission6 = Permission::create(['name'=>'create-user']);
         $Permission5 = Permission::create(['name'=>'viewAll-user']);
         Permission::create(['name'=>'view-user']);
         Permission::create(['name'=>'create-role']);
@@ -44,7 +44,7 @@ class PermissionSeeder extends Seeder
             'password' => Hash::make('Admin!@12'),
         ]);
 
-        $permissions = array($Permission1->id, $Permission2->id, $Permission3->id, $Permission4->id, $Permission5->id);
+        $permissions = array($Permission1->id, $Permission2->id, $Permission3->id, $Permission4->id, $Permission5->id, $Permission6->id);
         $user->givePermission($permissions);
 
         
