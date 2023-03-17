@@ -4,6 +4,7 @@ type AccessToken {
 }
 
 type Tokens {
+    user: User
     message: String!
     access_token: String
     refresh_token: String

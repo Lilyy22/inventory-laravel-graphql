@@ -27,9 +27,12 @@ final class Sign_in
                 
                     JwtToken::storeRefreshToken($refresh_token, $user->id);
 
-                    return ["access_token" => $access_token, 
+                    return [
+                            "user" => $user, 
+                            "access_token" => $access_token, 
                             "refresh_token"=> $refresh_token, 
-                            "message"=> "access token expires in 15 min"];
+                            "message"=> "access token expires in 15 min"
+                        ];
                 }
                 
                 return ["message"=> "email not verified"];
